@@ -123,7 +123,7 @@ tabela_uso_padrao_1 = pd.DataFrame({
     "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
     "Horas": pd.Series(dtype="float"),
     "Dias": pd.Series(dtype="int"),
-    "Volume medido (m³)": pd.Series(dtype="float"),
+    "Volume anual medido (m³)": pd.Series(dtype="float"),
 })
 
 
@@ -143,20 +143,20 @@ tabela_uso_1 = st.data_editor(
     column_config={
         "Natureza": st.column_config.SelectboxColumn(
             "Natureza",
-            help="Natureza do corpo d'água",
+            help="Natureza do corpo d'água: Superficial ou Subterrâneo",
             options=["Superficial", "Subterrâneo"],
             required=True,
-            width="medium",
+            width="small",
         ),
         "Classe de uso": st.column_config.SelectboxColumn(
             "Classe de uso",
-            help="Classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação",
+            help="Classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação: Classe 1, Classe 2, Classe 3 ou Classe 4",
             options=["Classe 1", "Classe 2", "Classe 3", "Classe 4"],
             required=True,
             width="small",
         ),
         "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
-            "Vazão (m³/h)",
+            "Vazão outorgada (m³/h)",
             help="Vazão de captação outorgada em m³/h",
             min_value=0.0,
             step=0.01,
@@ -166,7 +166,7 @@ tabela_uso_1 = st.data_editor(
         ),
         "Horas": st.column_config.NumberColumn(
             "Horas",
-            help="Quantidade de horas de uso de captação outorgada ao longo do dia",
+            help="Quantidade de horas de uso de captação outorgada ao longo do dia (entre 0 e 24 horas)",
             min_value=0,
             step=0.01,
             required=True,
@@ -174,15 +174,15 @@ tabela_uso_1 = st.data_editor(
         ),
         "Dias": st.column_config.NumberColumn(
             "Dias",
-            help="Quantidade de dias de uso de captação outorgada ao longo do mês",
+            help="Quantidade de dias de uso de captação outorgada ao longo do mês (entre 0 e 365)",
             min_value=0,
             step=1,
             required=True,
             width="small",
         ),
-        "Volume medido (m³)": st.column_config.NumberColumn(
-            "Medição",
-            help="Existência de medição de volume captado, extraído ou derivado",
+        "Volume anual medido (m³)": st.column_config.NumberColumn(
+            "Volume anual medido (m³)",
+            help="Volume anual medido em m³ no ano anterior à cobrança, caso haja medição do uso de captação/consumo",
             min_value=0.0,
             step=0.01,
             format="%.2f",  # Número de casas decimais (2) exibidas na tabela
@@ -210,7 +210,8 @@ tabela_uso_padrao_2 = pd.DataFrame({
     "DBO (mg/L)": pd.Series(dtype="float"),
     "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
     "Horas": pd.Series(dtype="float"),
-    "Dias": pd.Series(dtype="int")
+    "Dias": pd.Series(dtype="int"),
+    "Volume anual medido (m³)": pd.Series(dtype="float")
 })
 
 
@@ -230,14 +231,14 @@ tabela_uso_2 = st.data_editor(
     column_config={
         "Classe de uso": st.column_config.SelectboxColumn(
             "Classe de uso",
-            help="Classe de uso preponderante do corpo d'água recepor",
+            help="Classe de uso preponderante do corpo d'água recepor: Classe 2, Classe 3 ou Classe 4",
             options=["Classe 2", "Classe 3", "Classe 4"],
             required=True,
             width="small",
         ),
         "Taxa de remoção (%)": st.column_config.SelectboxColumn(
             "Taxa de remoção (%)",
-            help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local",
+            help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
             options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
                      "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
             required=True,
@@ -262,21 +263,30 @@ tabela_uso_2 = st.data_editor(
             width="small",
         ),
         "Horas": st.column_config.NumberColumn(
-            "Horas",
-            help="Quantidade de horas de uso de lançamento outorgada ao longo do dia",
+            "Horas/Dia",
+            help="Quantidade de horas de uso de lançamento outorgada ao longo do dia (entre 0 e 24 horas)",
             min_value=0,
             step=0.01,
             required=True,
             width="small",
         ),
         "Dias": st.column_config.NumberColumn(
-            "Dias",
-            help="Quantidade de dias de uso de lançamento outorgada ao longo do mês",
+            "Dias/Ano",
+            help="Quantidade de dias de uso de lançamento outorgado ao longo do ano (entre 0 e 365)",
             min_value=0,
             step=1,
             required=True,
             width="small",
-        )
+        ),
+        "Volume anual medido (m³)": st.column_config.NumberColumn(
+            "Volume anual medido (m³)",
+            help="Volume anual medido em m³ no ano anterior à cobrança, caso haja medição do uso de lançamento",
+            min_value=0.0,
+            step=0.01,
+            format="%.2f",
+            required=True,
+            width="medium",
+        ),
     },
 )
 
