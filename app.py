@@ -174,7 +174,7 @@ tabela_uso_1 = st.data_editor(
         ),
         "Dias": st.column_config.NumberColumn(
             "Dias",
-            help="Quantidade de dias de uso de captação outorgada ao longo do mês (entre 0 e 365)",
+            help="Quantidade de dias de uso de captação outorgada ao longo do ano (entre 0 e 365)",
             min_value=0,
             step=1,
             required=True,
@@ -301,6 +301,15 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 ##################################################
 # Coeficientes Alto Paranapanema
 ##################################################
+
+#             ----------------------------------------------------------------
+#	          | Coeficientes que variam |        Fixos      | Não se aplicam |
+# ----------------------------------------------------------------------------
+# Captação	  |          X1, X2 	    |  X3, X5, X7, X13  | X4, X6, X8-X12 |
+# Consumo	  |          NENHUM	        | X1-X3, X5-X7, X13 |   X4, X8-X12   |
+# Lançamento  |          Y1, Y3         |         Y4	    |   Y2, Y5-Y9    |
+# ----------------------------------------------------------------------------
+
 # PUB: Preços Unitários Básicos
 # PUBCAP_ALPA = 0.009 # Captação
 # PUBCONS_ALPA = 0.02 # Consumo
