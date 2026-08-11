@@ -115,15 +115,15 @@ ALTURA_LINHA = 25
 LINHAS_VISIVEIS_SEM_SCROLL = 6
 ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
-st.write("Preencha os dados para os usos de **captação** do empreendimento (se houver):")
+st.write("Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
 
 tabela_uso_padrao_1 = pd.DataFrame({
     "Natureza": pd.Series(dtype="str"),
     "Classe de uso": pd.Series(dtype="str"),
-    "Vazão (m³/h)": pd.Series(dtype="float"),
+    "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
     "Horas": pd.Series(dtype="float"),
     "Dias": pd.Series(dtype="int"),
-    "Volume medido (m³)": pd.Series(dtype="str"),
+    "Volume medido (m³)": pd.Series(dtype="float"),
 })
 
 
@@ -155,12 +155,12 @@ tabela_uso_1 = st.data_editor(
             required=True,
             width="small",
         ),
-        "Vazão (m³/h)": st.column_config.NumberColumn(
+        "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
             "Vazão (m³/h)",
             help="Vazão de captação outorgada em m³/h",
             min_value=0.0,
             step=0.01,
-            format="%.2f", # Número de casas decimais (2) exibidas na tabela 
+            format="%.2f",  # Número de casas decimais (2) exibidas na tabela
             required=True,
             width="small",
         ),
@@ -180,10 +180,12 @@ tabela_uso_1 = st.data_editor(
             required=True,
             width="small",
         ),
-        "Volume medido (m³)": st.column_config.SelectboxColumn(
+        "Volume medido (m³)": st.column_config.NumberColumn(
             "Medição",
             help="Existência de medição de volume captado, extraído ou derivado",
-            options=["Existe", "Não existe"],
+            min_value=0.0,
+            step=0.01,
+            format="%.2f",  # Número de casas decimais (2) exibidas na tabela
             required=True,
             width="small",
         ),
@@ -203,12 +205,12 @@ st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
 st.write("Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
 
 tabela_uso_padrao_2 = pd.DataFrame({
-    "Vazão (m³/h)": pd.Series(dtype="float"),
-    "Horas": pd.Series(dtype="float"),
-    "Dias": pd.Series(dtype="int"),
     "Classe de uso": pd.Series(dtype="str"),
     "Taxa de remoção (%)": pd.Series(dtype="str"),
-    "DBO (mg/L)": pd.Series(dtype="float")
+    "DBO (mg/L)": pd.Series(dtype="float"),
+    "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
+    "Horas": pd.Series(dtype="float"),
+    "Dias": pd.Series(dtype="int")
 })
 
 
@@ -226,31 +228,6 @@ tabela_uso_2 = st.data_editor(
     row_height=ALTURA_LINHA,
     key="tabela_uso_agua_2",
     column_config={
-        "Vazão (m³/h)": st.column_config.NumberColumn(
-            "Vazão (m³/h)",
-            help="Vazão de lançamento outorgada em m³/h",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",
-            required=True,
-            width="small",
-        ),
-        "Horas": st.column_config.NumberColumn(
-            "Horas",
-            help="Quantidade de horas de uso de lançamento outorgada ao longo do dia",
-            min_value=0,
-            step=0.01,
-            required=True,
-            width="small",
-        ),
-        "Dias": st.column_config.NumberColumn(
-            "Dias",
-            help="Quantidade de dias de uso de lançamento outorgada ao longo do mês",
-            min_value=0,
-            step=1,
-            required=True,
-            width="small",
-        ),
         "Classe de uso": st.column_config.SelectboxColumn(
             "Classe de uso",
             help="Classe de uso preponderante do corpo d'água recepor",
@@ -272,6 +249,31 @@ tabela_uso_2 = st.data_editor(
             min_value=0.0,
             step=0.01,
             format="%.2f",
+            required=True,
+            width="small",
+        ),
+        "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
+            "Vazão (m³/h)",
+            help="Vazão de lançamento outorgada em m³/h",
+            min_value=0.0,
+            step=0.01,
+            format="%.2f",
+            required=True,
+            width="small",
+        ),
+        "Horas": st.column_config.NumberColumn(
+            "Horas",
+            help="Quantidade de horas de uso de lançamento outorgada ao longo do dia",
+            min_value=0,
+            step=0.01,
+            required=True,
+            width="small",
+        ),
+        "Dias": st.column_config.NumberColumn(
+            "Dias",
+            help="Quantidade de dias de uso de lançamento outorgada ao longo do mês",
+            min_value=0,
+            step=1,
             required=True,
             width="small",
         )
