@@ -1,7 +1,7 @@
-import os              # Miscelâneos
+import os               # Miscelâneos
 import streamlit as st  # Aplicação web
-import pandas as pd    # Maniplação de dados
-import numpy as np     # Cálulos matemáticos
+import pandas as pd     # Maniplação de dados
+import numpy as np      # Cálulos matemáticos
 
 # Nome da página
 st.set_page_config(
@@ -119,12 +119,12 @@ st.write("Preencha os dados para os usos de **captação** do empreendimento (se
 
 tabela_uso_padrao_1 = pd.DataFrame({
     "Tipo de uso": pd.Series(dtype="str"),
+    "Classe de uso": pd.Series(dtype="str"),
+    "Natureza": pd.Series(dtype="str"),
     "Vazão (m³/h)": pd.Series(dtype="float"),
     "Horas": pd.Series(dtype="float"),
     "Dias": pd.Series(dtype="int"),
-    "Medição": pd.Series(dtype="str"),
-    "Natureza": pd.Series(dtype="str"),
-    "Classe de uso": pd.Series(dtype="str"),
+    "Volume medido (m³)": pd.Series(dtype="str"),
 })
 
 
