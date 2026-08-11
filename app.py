@@ -111,7 +111,7 @@ bacia_selecionada = st.selectbox(
 #################################################################################################
 
 # Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
-ALTURA_LINHA = 25
+ALTURA_LINHA = 22
 LINHAS_VISIVEIS_SEM_SCROLL = 6
 ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
@@ -300,7 +300,7 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 #                              Coeficientes Aguapeí/Peixe                               #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -308,16 +308,11 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 # --------------------------------------------------------------------------------------#
 
 
-
-
-
-
-
 #########################################################################################
 #                            Coeficientes Alto Paranapanema                             #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |          X1, X2 	    |   X3, X5, X7, X13  |      X4, X6, X8-X12     |#
 # Consumo	  |          NENHUM	        |  X1-X3, X5-X7, X13 |        X4, X8-X12       |#
@@ -392,7 +387,6 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 
 # Y4: A natureza da atividade
 # Y4_ALPA = 1
-
 
 
 def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
@@ -479,7 +473,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # ---------- CONSUMO ----------
     # Volume consumido = o que foi captado e não voltou ao corpo d'água.
     # Todos os fatores X do consumo valem 1, então o valor é direto.
-    volume_consumido = max(0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
+    volume_consumido = max(
+        0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
     valor_consumo_total = volume_consumido * PUBCONS
 
     return {
@@ -497,149 +492,131 @@ CALCULADORAS_POR_BACIA = {
 
 
 
-
-
-
-
-
-
-
-
-
-
+if st.button("Calcular"):
+    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
+    if calculadora is None:
+        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+    else:
+        resultado = calculadora(tabela_uso_1, tabela_uso_2)
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
+        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
+        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
+        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
 
 #########################################################################################
 #                                Coeficientes Alto Tietê                                #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
-
 
 
 #########################################################################################
 #                             Coeficientes Baixada Santista                             #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
-
 
 
 #########################################################################################
 #                            Coeficientes Baixo Pardo/Grande                            #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
-
-
-
 
 
 #########################################################################################
 #                                Coeficientes Baixo Tietê                               #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
-
 
 
 #########################################################################################
 #                              Coeficientes Litoral Norte                               #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
-
-
 
 
 #########################################################################################
 #                            Coeficientes Médio Paranapanema                            #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
 
 
 #########################################################################################
 #                                Coeficientes Mogi-Guaçu                                #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
-
 
 
 #########################################################################################
 #                              Coeficientes Paraíba do Sul                              #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
-
 
 
 #########################################################################################
 #                                   Coeficientes Pardo                                  #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
 
 
 #########################################################################################
 #                       Coeficientes Piracicaba/Capivari/Jundiaí                        #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -647,12 +624,11 @@ CALCULADORAS_POR_BACIA = {
 # --------------------------------------------------------------------------------------#
 
 
-
 #########################################################################################
 #                          Coeficientes Pontal do Paranapanema                          #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -664,7 +640,7 @@ CALCULADORAS_POR_BACIA = {
 #                       Coeficientes Ribeira de Iguape/Litoral Sul                      #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -672,12 +648,11 @@ CALCULADORAS_POR_BACIA = {
 # --------------------------------------------------------------------------------------#
 
 
-
 #########################################################################################
 #                          Coeficientes São José dos Dourados                           #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -689,7 +664,7 @@ CALCULADORAS_POR_BACIA = {
 #                           Coeficientes Sapucaí-Mirim/Grande                           #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -697,12 +672,11 @@ CALCULADORAS_POR_BACIA = {
 # --------------------------------------------------------------------------------------#
 
 
-
 #########################################################################################
 #                           Coeficientes Serra da Mantiqueira                           #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -714,7 +688,7 @@ CALCULADORAS_POR_BACIA = {
 #                           Coeficientes Sorocaba/Médio Tietê                           #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -726,20 +700,19 @@ CALCULADORAS_POR_BACIA = {
 #                              Coeficientes Tietê/Batalha                               #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
 # Lançamento  |                         |         	         |                         |#
 # --------------------------------------------------------------------------------------#
-
 
 
 #########################################################################################
 #                               Coeficientes Tietê/Jacaré                               #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
@@ -747,13 +720,11 @@ CALCULADORAS_POR_BACIA = {
 # --------------------------------------------------------------------------------------#
 
 
-
-
 #########################################################################################
 #                               Coeficientes Turvo/Grande                               #
 #########################################################################################
 #             --------------------------------------------------------------------------#
-#	          | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
+# | Coeficientes que variam | Coeficientes Fixos | Coeficientes não usados |#
 # --------------------------------------------------------------------------------------#
 # Captação	  |                 	    |                    |                         |#
 # Consumo	  |          	            |                    |                         |#
