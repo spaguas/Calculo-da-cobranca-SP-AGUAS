@@ -121,8 +121,8 @@ tabela_uso_padrao_1 = pd.DataFrame({
     "Natureza": pd.Series(dtype="str"),
     "Classe de uso": pd.Series(dtype="str"),
     "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
-    "Horas": pd.Series(dtype="float"),
-    "Dias": pd.Series(dtype="int"),
+    "Horas/Dia": pd.Series(dtype="float"),
+    "Dias/Ano": pd.Series(dtype="int"),
     "Volume anual medido (m³)": pd.Series(dtype="float"),
 })
 
@@ -164,16 +164,16 @@ tabela_uso_1 = st.data_editor(
             required=True,
             width="small",
         ),
-        "Horas": st.column_config.NumberColumn(
-            "Horas",
+        "Horas/Dia": st.column_config.NumberColumn(
+            "Horas/Dia",
             help="Quantidade de horas de uso de captação outorgada ao longo do dia (entre 0 e 24 horas)",
             min_value=0,
             step=0.01,
             required=True,
             width="small",
         ),
-        "Dias": st.column_config.NumberColumn(
-            "Dias",
+        "Dias/Ano": st.column_config.NumberColumn(
+            "Dias/Ano",
             help="Quantidade de dias de uso de captação outorgada ao longo do ano (entre 0 e 365)",
             min_value=0,
             step=1,
@@ -209,8 +209,8 @@ tabela_uso_padrao_2 = pd.DataFrame({
     "Taxa de remoção (%)": pd.Series(dtype="str"),
     "DBO (mg/L)": pd.Series(dtype="float"),
     "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
-    "Horas": pd.Series(dtype="float"),
-    "Dias": pd.Series(dtype="int"),
+    "Horas/Dia": pd.Series(dtype="float"),
+    "Dias/Ano": pd.Series(dtype="int"),
     "Volume anual medido (m³)": pd.Series(dtype="float")
 })
 
@@ -242,7 +242,7 @@ tabela_uso_2 = st.data_editor(
             options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
                      "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
             required=True,
-            width="small",
+            width="medium",
         ),
         "DBO (mg/L)": st.column_config.NumberColumn(
             "DBO (mg/L)",
@@ -254,15 +254,15 @@ tabela_uso_2 = st.data_editor(
             width="small",
         ),
         "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
-            "Vazão (m³/h)",
+            "Vazão outorgada (m³/h)",
             help="Vazão de lançamento outorgada em m³/h",
             min_value=0.0,
             step=0.01,
             format="%.2f",
             required=True,
-            width="small",
+            width="medium",
         ),
-        "Horas": st.column_config.NumberColumn(
+        "Horas/Dia": st.column_config.NumberColumn(
             "Horas/Dia",
             help="Quantidade de horas de uso de lançamento outorgada ao longo do dia (entre 0 e 24 horas)",
             min_value=0,
@@ -270,7 +270,7 @@ tabela_uso_2 = st.data_editor(
             required=True,
             width="small",
         ),
-        "Dias": st.column_config.NumberColumn(
+        "Dias/Ano": st.column_config.NumberColumn(
             "Dias/Ano",
             help="Quantidade de dias de uso de lançamento outorgado ao longo do ano (entre 0 e 365)",
             min_value=0,
