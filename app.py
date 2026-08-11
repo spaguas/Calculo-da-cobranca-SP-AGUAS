@@ -149,6 +149,20 @@ tabela_uso_1 = st.data_editor(
             required=True,
             width="small",
         ),
+        "Classe de uso": st.column_config.SelectboxColumn(
+            "Classe de uso",
+            help="Classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação",
+            options=["Classe 1", "Classe 2", "Classe 3", "Classe 4"],
+            required=True,
+            width="small",
+        ),
+        "Natureza": st.column_config.SelectboxColumn(
+            "Natureza",
+            help="Natureza do corpo d'água",
+            options=["Superficial", "Subterrâneo"],
+            required=True,
+            width="medium",
+        ),
         "Vazão (m³/h)": st.column_config.NumberColumn(
             "Vazão (m³/h)",
             help="Vazão de captação outorgada em m³/h",
@@ -174,24 +188,10 @@ tabela_uso_1 = st.data_editor(
             required=True,
             width="small",
         ),
-        "Medição": st.column_config.SelectboxColumn(
+        "Volume medido (m³)": st.column_config.SelectboxColumn(
             "Medição",
             help="Existência de medição de volume captado, extraído ou derivado",
             options=["Existe", "Não existe"],
-            required=True,
-            width="small",
-        ),
-        "Natureza": st.column_config.SelectboxColumn(
-            "Natureza",
-            help="Natureza do corpo d'água",
-            options=["Superficial", "Subterrâneo"],
-            required=True,
-            width="medium",
-        ),
-        "Classe de uso": st.column_config.SelectboxColumn(
-            "Classe de uso",
-            help="Classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação",
-            options=["Classe 1", "Classe 2", "Classe 3", "Classe 4"],
             required=True,
             width="small",
         ),
