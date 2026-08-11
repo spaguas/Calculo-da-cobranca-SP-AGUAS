@@ -118,9 +118,8 @@ ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 st.write("Preencha os dados para os usos de **captação** do empreendimento (se houver):")
 
 tabela_uso_padrao_1 = pd.DataFrame({
-    "Tipo de uso": pd.Series(dtype="str"),
-    "Classe de uso": pd.Series(dtype="str"),
     "Natureza": pd.Series(dtype="str"),
+    "Classe de uso": pd.Series(dtype="str"),
     "Vazão (m³/h)": pd.Series(dtype="float"),
     "Horas": pd.Series(dtype="float"),
     "Dias": pd.Series(dtype="int"),
@@ -142,12 +141,12 @@ tabela_uso_1 = st.data_editor(
     row_height=ALTURA_LINHA,
     key="tabela_uso_agua_1",
     column_config={
-        "Tipo de uso": st.column_config.SelectboxColumn(
-            "Tipo de uso",
-            help="Tipo de uso: captação superficial ou subterrânea",
-            options=["Captação Superficial", "Captação Subterrânea"],
+        "Natureza": st.column_config.SelectboxColumn(
+            "Natureza",
+            help="Natureza do corpo d'água",
+            options=["Superficial", "Subterrâneo"],
             required=True,
-            width="small",
+            width="medium",
         ),
         "Classe de uso": st.column_config.SelectboxColumn(
             "Classe de uso",
@@ -156,19 +155,12 @@ tabela_uso_1 = st.data_editor(
             required=True,
             width="small",
         ),
-        "Natureza": st.column_config.SelectboxColumn(
-            "Natureza",
-            help="Natureza do corpo d'água",
-            options=["Superficial", "Subterrâneo"],
-            required=True,
-            width="medium",
-        ),
         "Vazão (m³/h)": st.column_config.NumberColumn(
             "Vazão (m³/h)",
             help="Vazão de captação outorgada em m³/h",
             min_value=0.0,
             step=0.01,
-            format="%.2f",
+            format="%.2f", # Número de casas decimais (2) exibidas na tabela 
             required=True,
             width="small",
         ),
