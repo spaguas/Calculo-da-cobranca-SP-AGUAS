@@ -1,11 +1,11 @@
-import os
-import streamlit as st
-import pandas as pd
-import numpy as np
+import os              # Miscelâneos
+import streamlit as st  # Aplicação web
+import pandas as pd    # Maniplação de dados
+import numpy as np     # Cálulos matemáticos
 
 # Nome da página
 st.set_page_config(
-    page_title="Calculadora SP-ÁGUAS",
+    page_title="Simulador SP-ÁGUAS",
     page_icon="SP-Águas---Colorido.png",
     layout="wide",
 )
@@ -71,7 +71,7 @@ st.markdown(
 )
 
 # st.write("Preencha os dados abaixo para simular o valor da sua conta de água.")
-#st.write('Selecione a Bacia Hidrográfica:')
+# st.write('Selecione a Bacia Hidrográfica:')
 
 # Seleção das bacias hidrográficas
 
@@ -129,7 +129,7 @@ tabela_uso_padrao_1 = pd.DataFrame({
 
 
 # Altura total da tabela, calculada dinamicamente para caber todas as linhas sem precisar de barra de rolagem interna.
-#if "altura_tabela_uso_1" not in st.session_state:
+# if "altura_tabela_uso_1" not in st.session_state:
 #    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
 #        (len(tabela_uso_padrao_1) + 3) + 46
 
@@ -221,7 +221,7 @@ tabela_uso_padrao_2 = pd.DataFrame({
 
 
 # Altura total da tabela, calculada dinamicamente para caber todas as linhas sem precisar de barra de rolagem interna.
-#if "altura_tabela_uso_2" not in st.session_state:
+# if "altura_tabela_uso_2" not in st.session_state:
 #    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 #        (len(tabela_uso_padrao_2) + 3) + 46
 
