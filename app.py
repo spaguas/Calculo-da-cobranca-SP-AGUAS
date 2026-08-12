@@ -491,11 +491,11 @@ CALCULADORAS_POR_BACIA = {
 }
 
 
-
 if st.button("Calcular"):
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
     if calculadora is None:
-        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+        st.warning(
+            f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(4)
