@@ -2,5 +2,5 @@
 font = "Montserrat:https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
 baseFontSize = 20
 dataframeHeaderBackgroundColor = "#accafe"
-dataframeBorderColor = "#4f5558"
+dataframeBorderColor = "#588DFF"
 primaryColor = "#003EC4"
