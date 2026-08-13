@@ -773,16 +773,20 @@ CALCULADORAS_POR_BACIA = {
 
 
 # Botão "Calcular" que dispara a função de cálculo da bacia selecionada, caso ela esteja implementada.
+
+# Usamos duas abordagens: A primeira mostra os dados calculados no final da página, enquanto que a segunda mostra uma nova janela com os dados calculados.
+
+###############################################################
+# 1ª ABORDAGEM: Dados calculados mostrados no final da página #
+###############################################################
 col_esq, col_botao, col_dir = st.columns([3, 1, 3])
 with col_botao:
-    calcular = st.button("Calcular", type="primary",
-                         icon="🧮", use_container_width=True)
+    calcular = st.button("Calcular", type="primary", icon="🧮", use_container_width=True)
 
 if calcular:
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
     if calculadora is None:
-        st.warning(
-            f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(2)
@@ -790,3 +794,27 @@ if calcular:
         col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
         col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
         col4.metric("Total", f"R$ {resultado['total']:,.2f}")
+
+
+###############################################################
+# 2ª ABORDAGEM: Dados calculados mostrados em uma nova janela #
+###############################################################
+
+#@st.dialog("Resultado do cálculo", width="medium")
+#def mostrar_resultado():
+#    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
+#    if calculadora is None:
+#        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+#    else:
+#        resultado = calculadora(tabela_uso_1, tabela_uso_2)
+#        col1, col2, col3, col4 = st.columns(4)
+#        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
+#        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
+#        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
+#        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
+
+#col_esq, col_botao, col_dir = st.columns([3, 1, 3])
+#with col_botao:
+#    if st.button("Calcular", type="primary", icon="🧮", use_container_width=True):
+#        mostrar_resultado() 
+
