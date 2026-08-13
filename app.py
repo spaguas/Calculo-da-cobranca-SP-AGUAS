@@ -110,7 +110,7 @@ bacia_selecionada = st.selectbox(
     bacias_hidrograficas,
     index=None,
     placeholder="Selecione a Bacia Hidrográfica",
-    label_visibility="collapsed",   
+    label_visibility="collapsed",
 )
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -247,7 +247,8 @@ tabela_uso_2 = st.data_editor(
         "Taxa de remoção (%)": st.column_config.SelectboxColumn(
             "Taxa de remoção (%)",
             help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
-            options=["> 95% de remoção", "> 90% e ≤ 95% de remoção", "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
+            options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
+                     "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
             required=True,
             width="medium",
         ),
@@ -305,12 +306,11 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #
-# A seção abaixo faz as considerações sobre os coeficientes de cada bacia hidrográfica. Como existe uma particularidade do cálculo da cobrança para cada bacia, uma vez que cada uma possui 
-# seu respectivo decreto, é necessário considerar uma função específica para cada CBH. Ademais, é necessário considerar que as colunas das tabelas para consumo e lançamento sejam diferentes 
-# para cada bacia.    
+# A seção abaixo faz as considerações sobre os coeficientes de cada bacia hidrográfica. Como existe uma particularidade do cálculo da cobrança para cada bacia, uma vez que cada uma possui
+# seu respectivo decreto, é necessário considerar uma função específica para cada CBH. Ademais, é necessário considerar que as colunas das tabelas para consumo e lançamento sejam diferentes
+# para cada bacia.
 #
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 
 ####################################################################################################
@@ -490,7 +490,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # ---------- CONSUMO ----------
     # Volume consumido = o que foi captado e não voltou ao corpo d'água.
     # Todos os fatores X do consumo valem 1, então o valor é direto.
-    volume_consumido = max(0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
+    volume_consumido = max(
+        0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
     valor_consumo_total = volume_consumido * PUBCONS
 
     return {
@@ -499,7 +500,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         "lancamento": valor_lancamento_total,
         "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
     }
-
 
 
 ####################################################################################################
@@ -729,37 +729,31 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 # -------------------------------------------------------------------------------------------------#
 
 
-
-
-
-
-
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Seleção da função de cálculo de acordo com a bacia hidrográfica selecionada.
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 CALCULADORAS_POR_BACIA = {
-    #"Aguapeí/Peixe": calcular_aguapei_peixe,
+    # "Aguapeí/Peixe": calcular_aguapei_peixe,
     "Alto Paranapanema": calcular_alto_paranapanema,
-    #"Alto Tietê": calcular_alto_tiete,
-    #"Bacia Hidrográfica da Baixada Santista": calcular_bacia_hidrografica_da_baixada_santista,
-    #"Baixo Pardo/Grande": calcular_baixo_pardo_grande,
-    #"Baixo Tietê": calcular_baixo_tiete,
-    #"Litoral Norte": calcular_litoral_norte,
-    #"Médio Paranapanema": calcular_medio_paranapanema,
-    #"Mogi-Guaçu": calcular_mogi_guacu,
-    #"Paraíba do Sul": calcular_paraiba_do_sul,
-    #"Pardo": calcular_pardo,
-    #"Piracicaba/Capivari/Jundiaí": calcular_piracicaba_capivari_jundiai,
-    #"Pontal do Paranapanema": calcular_pontal_do_paranapanema,
-    #"Ribeira de Iguape/Litoral Sul": calcular_ribeira_de_iguape_litoral_sul,
-    #"São José dos Dourados": calcular_sao_jose_dos_dourados,
-    #"Sapucaí-Mirim/Grande": calcular_sapucai_mirim_grande,
-    #"Serra da Mantiqueira": calcular_serra_da_mantiqueira,
-    #"Sorocaba/Médio Tietê": calcular_sorocaba_medio_tiete,
-    #"Tietê/Batalha": calcular_tiete_batalha,
-    #"Tietê/Jacaré": calcular_tiete_jacare,
-    #"Turvo/Grande": calcular_turvo_grande,
+    # "Alto Tietê": calcular_alto_tiete,
+    # "Bacia Hidrográfica da Baixada Santista": calcular_bacia_hidrografica_da_baixada_santista,
+    # "Baixo Pardo/Grande": calcular_baixo_pardo_grande,
+    # "Baixo Tietê": calcular_baixo_tiete,
+    # "Litoral Norte": calcular_litoral_norte,
+    # "Médio Paranapanema": calcular_medio_paranapanema,
+    # "Mogi-Guaçu": calcular_mogi_guacu,
+    # "Paraíba do Sul": calcular_paraiba_do_sul,
+    # "Pardo": calcular_pardo,
+    # "Piracicaba/Capivari/Jundiaí": calcular_piracicaba_capivari_jundiai,
+    # "Pontal do Paranapanema": calcular_pontal_do_paranapanema,
+    # "Ribeira de Iguape/Litoral Sul": calcular_ribeira_de_iguape_litoral_sul,
+    # "São José dos Dourados": calcular_sao_jose_dos_dourados,
+    # "Sapucaí-Mirim/Grande": calcular_sapucai_mirim_grande,
+    # "Serra da Mantiqueira": calcular_serra_da_mantiqueira,
+    # "Sorocaba/Médio Tietê": calcular_sorocaba_medio_tiete,
+    # "Tietê/Batalha": calcular_tiete_batalha,
+    # "Tietê/Jacaré": calcular_tiete_jacare,
+    # "Turvo/Grande": calcular_turvo_grande,
 }
 
 
@@ -767,7 +761,8 @@ CALCULADORAS_POR_BACIA = {
 if st.button("Calcular"):
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
     if calculadora is None:
-        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+        st.warning(
+            f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(4)
