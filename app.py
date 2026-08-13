@@ -741,7 +741,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CALCULADORAS_POR_BACIA = {
-    "Alto Paranapanema": calcular_alto_paranapanema,
     "Aguapeí/Peixe": calcular_aguapei_peixe,
     "Alto Paranapanema": calcular_alto_paranapanema,
     "Alto Tietê": calcular_alto_tiete,
