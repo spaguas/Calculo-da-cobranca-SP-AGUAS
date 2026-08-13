@@ -57,6 +57,10 @@ st.markdown("""
     p, li, label, .stMarkdown, .stCaption {
         font-size: 16px !important;
     }
+    
+    [data-testid="stVerticalBlock"] {
+        gap: 0.6rem !important;
+    }
             
     [data-testid="stSelectbox"] [role="group"] {
         background-color: #D0D8E4 !important;
