@@ -3,3 +3,4 @@ font = "Montserrat:https://fonts.googleapis.com/css2?family=Montserrat:wght@400;
 baseFontSize = 20
 dataframeHeaderBackgroundColor = "#accafe"
 dataframeBorderColor = "#4f5558"
+primaryColor = "#1E5AA8"
