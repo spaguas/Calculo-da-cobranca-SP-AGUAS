@@ -779,42 +779,77 @@ CALCULADORAS_POR_BACIA = {
 ###############################################################
 # 1ª ABORDAGEM: Dados calculados mostrados no final da página #
 ###############################################################
-col_esq, col_botao, col_dir = st.columns([3, 1, 3])
-with col_botao:
-    calcular = st.button("Calcular", type="primary", icon="🧮", use_container_width=True)
+#col_esq, col_botao, col_dir = st.columns([3, 1, 3])
+#with col_botao:
+#    calcular = st.button("Calcular", type="primary", icon="🧮", use_container_width=True)
 
-if calcular:
-    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
-    if calculadora is None:
-        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
-    else:
-        resultado = calculadora(tabela_uso_1, tabela_uso_2)
-        col1, col2, col3, col4 = st.columns(2)
-        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
-        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
-        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
-        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
-
-
-###############################################################
-# 2ª ABORDAGEM: Dados calculados mostrados em uma nova janela #
-###############################################################
-
-#@st.dialog("Resultado do cálculo", width="medium")
-#def mostrar_resultado():
+#if calcular:
 #    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
 #    if calculadora is None:
 #        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
 #    else:
 #        resultado = calculadora(tabela_uso_1, tabela_uso_2)
-#        col1, col2, col3, col4 = st.columns(4)
+#        col1, col2, col3, col4 = st.columns(2)
 #        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
 #        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
 #        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
 #        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
 
-#col_esq, col_botao, col_dir = st.columns([3, 1, 3])
-#with col_botao:
-#    if st.button("Calcular", type="primary", icon="🧮", use_container_width=True):
-#        mostrar_resultado() 
+
+###############################################################
+# 2ª ABORDAGEM: Dados calculados mostrados em uma nova janela #
+###############################################################
+@st.dialog("Resultado do cálculo", width="medium")
+def mostrar_resultado():
+    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
+    if calculadora is None:
+        st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+    else:
+        resultado = calculadora(tabela_uso_1, tabela_uso_2)
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
+        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
+        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
+        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
+
+col_esq, col_botao, col_dir = st.columns([3, 1, 3])
+with col_botao:
+    if st.button("Calcular", type="primary", icon="🧮", use_container_width=True):
+        mostrar_resultado() 
+
+# O trecho abaixo serve para centralizar a janela modal que aparece quando o botão "Calcular" é clicado.
+# Além disso, ele também altera a fonte do texto para Montserrat, que é uma fonte mais moderna e legível.
+st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+    html, body, [data-testid="stAppViewContainer"] {
+        font-family: 'Montserrat', Montserrat !important;
+    }
+
+    .block-container {
+        padding-top: 2.9rem;
+        padding-bottom: 1rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        max-width: 12350px;
+    }
+
+    h1 {
+        font-weight: 700 !important;
+    }
+
+    p, li, label, .stMarkdown, .stCaption {
+        font-size: 16px !important;
+    }
+
+    [data-testid="stSelectbox"] [role="group"] {
+        background-color: #D0D8E4 !important;
+    }
+
+    [data-testid="stDialog"] {
+        align-items: center !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
