@@ -66,6 +66,11 @@ st.markdown("""
         background-color: #D0D8E4 !important;
     }
 
+    [data-testid="stAlertContainer"]:has([data-testid="stAlertContentError"]) {
+        background-color: rgba(255, 43, 43, 0.4) !important;
+        border: 1px solid rgba(255, 43, 43, 1) !important;
+    }
+
     </style>
 """, unsafe_allow_html=True)
 
@@ -793,9 +798,9 @@ if calcular:
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
     if calculadora is None:
         if bacia_selecionada is None:
-            st.warning("Selecione a Bacia Hidrográfica antes de calcular.")
+            st.error("Selecione a Bacia Hidrográfica antes de calcular.")
         else:
-            st.warning(
+            st.error(
                 f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
@@ -813,12 +818,12 @@ if calcular:
 # @st.dialog("Resultado do cálculo", width="medium")
 # def mostrar_resultado():
 #     if bacia_selecionada is None:
-#         st.warning("Selecione a Bacia Hidrográfica antes de calcular.")
+#         st.error("Selecione a Bacia Hidrográfica antes de calcular.")
 #         return
 
 #     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
 #     if calculadora is None:
-#         st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+#         st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
 #     else:
 #         resultado = calculadora(tabela_uso_1, tabela_uso_2)
 #         col1, col2, col3, col4 = st.columns(4)
