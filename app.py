@@ -801,6 +801,10 @@ CALCULADORAS_POR_BACIA = {
 ###############################################################
 @st.dialog("Resultado do cálculo", width="medium")
 def mostrar_resultado():
+    if bacia_selecionada is None:
+        st.warning("Selecione a Bacia Hidrográfica antes de calcular.")
+        return
+
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
     if calculadora is None:
         st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
