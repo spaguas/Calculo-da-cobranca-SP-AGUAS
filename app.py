@@ -66,6 +66,7 @@ st.markdown("""
         background-color: #D0D8E4 !important;
     }
 
+
     [data-testid="stAlertContainer"]:has([data-testid="stAlertContentError"]) {
         background-color: rgba(255, 43, 43, 0.4) !important;
         border: 1px solid rgba(255, 43, 43, 1) !important;
