@@ -736,16 +736,33 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
 
 
-
-
-
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Seleção da função de cálculo de acordo com a bacia hidrográfica selecionada.
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CALCULADORAS_POR_BACIA = {
     "Alto Paranapanema": calcular_alto_paranapanema,
-
+    "Aguapeí/Peixe": calcular_aguapei_peixe,
+    "Alto Paranapanema": calcular_alto_paranapanema,
+    "Alto Tietê": calcular_alto_tiete,
+    "Bacia Hidrográfica da Baixada Santista": calcular_bacia_hidrografica_da_baixada_santista,
+    "Baixo Pardo/Grande": calcular_baixo_pardo_grande,
+    "Baixo Tietê": calcular_baixo_tiete,
+    "Litoral Norte": calcular_litoral_norte,
+    "Médio Paranapanema": calcular_medio_paranapanema,
+    "Mogi-Guaçu": calcular_mogi_guacu,
+    "Paraíba do Sul": calcular_paraiba_do_sul,
+    "Pardo": calcular_pardo,
+    "Piracicaba/Capivari/Jundiaí": calcular_piracicaba_capivari_jundiai,
+    "Pontal do Paranapanema": calcular_pontal_do_paranapanema,
+    "Ribeira de Iguape/Litoral Sul": calcular_ribeira_de_iguape_litoral_sul,
+    "São José dos Dourados": calcular_sao_jose_dos_dourados,
+    "Sapucaí-Mirim/Grande": calcular_sapucai_mirim_grande,
+    "Serra da Mantiqueira": calcular_serra_da_mantiqueira,
+    "Sorocaba/Médio Tietê": calcular_sorocaba_medio_tiete,
+    "Tietê/Batalha": calcular_tiete_batalha,
+    "Tietê/Jacaré": calcular_tiete_jacare,
+    "Turvo/Grande": calcular_turvo_grande,
 }
 
 
