@@ -61,6 +61,7 @@ st.markdown("""
     [data-testid="stSelectbox"] [role="group"] {
         background-color: #D0D8E4 !important;
     }
+
     </style>
 """, unsafe_allow_html=True)
 
@@ -794,7 +795,7 @@ if calcular:
                 f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
-        col1, col2, col3, col4 = st.columns(2)
+        col1, col2, col3, col4 = st.columns(4)
         col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
         col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
         col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
