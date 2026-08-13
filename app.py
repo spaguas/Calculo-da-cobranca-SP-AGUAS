@@ -1,19 +1,25 @@
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#  Bibliotecas
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 import os               # Miscelâneos
 import streamlit as st  # Aplicação web
 import pandas as pd     # Maniplação de dados
 import numpy as np      # Cálulos matemáticos
 
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Nome da página
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 st.set_page_config(
     page_title="Simulador SP-ÁGUAS",
     page_icon="SP-Águas---Colorido.png",
     layout="wide",
 )
 
-# ----------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ESTILO
 # A fonte (Montserrat) e o tamanho base do texto são definidos nativamente pelo Streamlit, no arquivo .streamlit/config.toml
-# ----------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
@@ -44,9 +50,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ----------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # CABEÇALHO
-# ----------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 col_esq, col_logo, col_dir = st.columns([2, 0.6, 2])
 
 with col_logo:
@@ -73,8 +79,9 @@ st.markdown(
 # st.write("Preencha os dados abaixo para simular o valor da sua conta de água.")
 # st.write('Selecione a Bacia Hidrográfica:')
 
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Seleção das bacias hidrográficas
-
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 bacias_hidrograficas = ["Aguapeí/Peixe",
                         "Alto Paranapanema",
@@ -103,12 +110,13 @@ bacia_selecionada = st.selectbox(
     bacias_hidrograficas,
     index=None,
     placeholder="Selecione a Bacia Hidrográfica",
-    label_visibility="collapsed",
+    label_visibility="collapsed",   
 )
 
-#################################################################################################
-# Preenchimento Captação
-#################################################################################################
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Preenchimento da tabela de Captação
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 # Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
 ALTURA_LINHA = 22
@@ -197,9 +205,9 @@ st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
     (len(tabela_uso_1) + 3) + 46
 
 
-#################################################################################################
-# Preenchimento Lançamento
-#################################################################################################
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Preenchimento da tabela de Lançamento
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 st.write("Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
@@ -294,6 +302,16 @@ tabela_uso_2 = st.data_editor(
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
 st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
     (len(tabela_uso_2) + 3) + 46
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#
+# A seção abaixo faz as considerações sobre os coeficientes de cada bacia hidrográfica. Como existe uma particularidade do cálculo da cobrança para cada bacia, uma vez que cada uma possui 
+# seu respectivo decreto, é necessário considerar uma função específica para cada CBH. Ademais, é necessário considerar que as colunas das tabelas para consumo e lançamento sejam diferentes 
+# para cada bacia.    
+#
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 ####################################################################################################
@@ -485,24 +503,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     }
 
 
-CALCULADORAS_POR_BACIA = {
-    "Alto Paranapanema": calcular_alto_paranapanema,
-    # Demais bacias: adicione aqui conforme for levantando os decretos
-}
-
-
-if st.button("Calcular"):
-    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
-    if calculadora is None:
-        st.warning(
-            f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
-    else:
-        resultado = calculadora(tabela_uso_1, tabela_uso_2)
-        col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
-        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
-        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
-        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
 
 ####################################################################################################
 #                                      Coeficientes Alto Tietê                                     #
@@ -729,3 +729,36 @@ if st.button("Calcular"):
 # Consumo	  |                 	      |     X1-X3, X5-X7, X13     |         X4, X8-X12        |#
 # Lançamento  |          Y1, Y3           |            Y4             |         Y2, Y5-Y9         |#
 # -------------------------------------------------------------------------------------------------#
+
+
+
+
+
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Seleção da função de cálculo de acordo com a bacia hidrográfica selecionada.
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CALCULADORAS_POR_BACIA = {
+    "Alto Paranapanema": calcular_alto_paranapanema,
+
+}
+
+
+# Botão "Calcular" que dispara a função de cálculo da bacia selecionada, caso ela esteja implementada.
+if st.button("Calcular"):
+    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
+    if calculadora is None:
+        st.warning(
+            f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+    else:
+        resultado = calculadora(tabela_uso_1, tabela_uso_2)
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
+        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
+        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
+        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
