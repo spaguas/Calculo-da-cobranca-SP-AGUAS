@@ -59,7 +59,7 @@ st.markdown("""
     }
     
     [data-testid="stVerticalBlock"] {
-        gap: 0.6rem !important;
+        gap: 0.45rem !important;
     }
             
     [data-testid="stSelectbox"] [role="group"] {
@@ -138,7 +138,7 @@ bacia_selecionada = st.selectbox(
 
 
 # Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
-ALTURA_LINHA = 22
+ALTURA_LINHA = 25
 LINHAS_VISIVEIS_SEM_SCROLL = 6
 ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
