@@ -13,7 +13,6 @@
 # --------------------------------------------------------
 
 
-
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #  Bibliotecas
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -782,7 +781,8 @@ CALCULADORAS_POR_BACIA = {
 
 col_esq, col_botao, col_dir = st.columns([3, 1, 3])
 with col_botao:
-    calcular = st.button("Calcular", type="primary",icon="🧮", use_container_width=True)
+    calcular = st.button("Calcular", type="primary",
+                         icon="🧮", use_container_width=True)
 
 if calcular:
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
@@ -790,7 +790,8 @@ if calcular:
         if bacia_selecionada is None:
             st.warning("Selecione a Bacia Hidrográfica antes de calcular.")
         else:
-            st.warning(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+            st.warning(
+                f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(2)
@@ -824,7 +825,7 @@ if calcular:
 # col_esq, col_botao, col_dir = st.columns([3, 1, 3])
 # with col_botao:
 #     if st.button("Calcular", type="primary", icon="🧮", use_container_width=True):
-#         mostrar_resultado() 
+#         mostrar_resultado()
 
 # # O trecho abaixo serve para centralizar a janela modal que aparece quando o botão "Calcular" é clicado.
 # # Além disso, ele também altera a fonte do texto para Montserrat, que é uma fonte mais moderna e legível.
@@ -861,6 +862,3 @@ if calcular:
 #     }
 #     </style>
 # """, unsafe_allow_html=True)
-
-
-
