@@ -792,8 +792,7 @@ CALCULADORAS_POR_BACIA = {
 
 col_esq, col_botao, col_dir = st.columns([3, 1, 3])
 with col_botao:
-    calcular = st.button("Calcular", type="primary",
-                         icon="🧮", use_container_width=True)
+    calcular = st.button("Calcular", type="primary", icon="🧮", use_container_width=True)
 
 if calcular:
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
