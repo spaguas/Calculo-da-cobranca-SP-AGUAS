@@ -800,8 +800,7 @@ if calcular:
         if bacia_selecionada is None:
             st.error("Selecione a Bacia Hidrográfica antes de calcular.")
         else:
-            st.error(
-                f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+            st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(4)
