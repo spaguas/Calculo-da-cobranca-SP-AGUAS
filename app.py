@@ -59,7 +59,7 @@ st.markdown("""
     }
     
     [data-testid="stVerticalBlock"] {
-        gap: 0.45rem !important;
+        gap: 0.4rem !important;
     }
             
     [data-testid="stSelectbox"] [role="group"] {
