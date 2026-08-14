@@ -226,7 +226,8 @@ tabela_uso_1 = st.data_editor(
 )
 
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * (len(tabela_uso_1) + 3) + 46
+st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
+    (len(tabela_uso_1) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -324,7 +325,8 @@ tabela_uso_2 = st.data_editor(
 
 
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_2) + 3) + 46
+st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
+    (len(tabela_uso_2) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -513,7 +515,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # ---------- CONSUMO ----------
     # Volume consumido = o que foi captado e não voltou ao corpo d'água.
     # Todos os fatores X do consumo valem 1, então o valor é direto.
-    volume_consumido = max(0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
+    volume_consumido = max(
+        0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
     valor_consumo_total = volume_consumido * PUBCONS
 
     return {
@@ -789,7 +792,8 @@ CALCULADORAS_POR_BACIA = {
 
 col_esq, col_botao, col_dir = st.columns([3, 1, 3])
 with col_botao:
-    calcular = st.button("Calcular", type="primary", icon="🧮", use_container_width=True)
+    calcular = st.button("Calcular", type="primary",
+                         icon="🧮", use_container_width=True)
 
 if calcular:
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
@@ -797,7 +801,8 @@ if calcular:
         if bacia_selecionada is None:
             st.error("Selecione a Bacia Hidrográfica antes de calcular.")
         else:
-            st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+            st.error(
+                f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(4)
