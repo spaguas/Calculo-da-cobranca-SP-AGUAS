@@ -226,8 +226,7 @@ tabela_uso_1 = st.data_editor(
 )
 
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
-    (len(tabela_uso_1) + 3) + 46
+st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * (len(tabela_uso_1) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
