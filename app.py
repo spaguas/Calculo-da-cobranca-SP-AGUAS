@@ -264,7 +264,7 @@ tabela_uso_2 = st.data_editor(
     column_config={
         "Classe de uso": st.column_config.SelectboxColumn(
             "Classe de uso",
-            help="Classe de uso preponderante do corpo d'água recepor: Classe 2, Classe 3 ou Classe 4",
+            help="Classe de uso preponderante do corpo d'água receptor: Classe 2, Classe 3 ou Classe 4",
             options=["Classe 2", "Classe 3", "Classe 4"],
             required=True,
             width="small",
