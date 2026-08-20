@@ -272,8 +272,7 @@ tabela_uso_2 = st.data_editor(
         "Taxa de remoção (%)": st.column_config.SelectboxColumn(
             "Taxa de remoção (%)",
             help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
-            options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
-                     "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
+            options=["> 95% de remoção", "> 90% e ≤ 95% de remoção", "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
             required=True,
             width="medium",
         ),
