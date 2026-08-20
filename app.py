@@ -464,12 +464,24 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         return PUF_DBO
 
     ################################################################################################
-    # Calcular o Volume Captado V_CAP
+    # Calcular o Volume Captado de cada uso V_CAP
     ################################################################################################
     def calcular_v_cap(volume_outorgado, volume_medido):
         kout, kmed = obter_kout_kmed(volume_outorgado, volume_medido)
         V_CAP = volume_outorgado * kout + volume_medido * kmed
         return V_CAP
+
+    ################################################################################################
+    # Calcular o Volume Lançado de cada uso V_LANC 
+    ################################################################################################
+    def calcular_v_lanc(volume_outorgado, volume_medido):
+        if volume_medido > 0:
+            V_LANC = volume_medido
+        else:
+            V_LANC = volume_outorgado
+        return V_LANC
+
+
 
 
     ################################################################################################
