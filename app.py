@@ -428,7 +428,17 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         return valores[taxa_remocao]
     
     #################################################################################################
+    # Cálculo do KOUT e do KMED
+    ##################################################################################################
+    def obter_kout_kmed(volume_outorgado, volume_medido):
+    if volume_medido <= 0:
+        kout, kmed = 1, 0  # sem medição
+    elif volume_outorgado > 0 and (volume_medido / volume_outorgado) > 1:
+        kout, kmed = 0, 1  # volume medido excede o outorgado
+    else:
+        kout, kmed = 0.2, 0.8  # existe medição, dentro do limite outorgado
 
+    return kout, kmed
 
 
     return {
