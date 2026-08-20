@@ -442,23 +442,34 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     ################################################################################################
     # Calcular o PUF para captação, consumo e lançamento
     ################################################################################################
+    # Captação
     def calcular_puf_cap(natureza, classe_de_uso, PUBCAP_ALPA, x3_cap, x5_cap, x7_cap, x13_cap):
         x1 = obter_x1(natureza)
         x2 = obter_x2(classe_de_uso)
         PUF_CAP = PUBCAP_ALPA * x1 * x2 * x3_cap * x5_cap * x7_cap * x13_cap
         return PUF_CAP
 
-
+    # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
         PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
-
+    # Lançamento
     def calcular_puf_lanc(classe_de_uso, taxa_remocao, PUBDBO_ALPA, y4_lanc):
         y1 = obter_y1(classe_de_uso)
         y3 = obter_y3(taxa_remocao)
         PUF_DBO = PUBDBO_ALPA * y1 * y3 * y4_lanc
         return PUF_DBO
+
+    ################################################################################################
+    # Calcular o Volume Captado V_CAP
+    ################################################################################################
+    def calcular_v_cap(volume_outorgado, volume_medido):
+        kout, kmed = obter_kout_kmed(volume_outorgado, volume_medido)
+        V_CAP = volume_outorgado * kout + volume_medido * kmed
+        return V_CAP
+
+
 
 
     return {
