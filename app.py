@@ -361,12 +361,12 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 # -------------------------------------------------------------------------------------------------#
 
 def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
-    #################################################################################################
+    ################################################################################################
     # Parâmetros constantes/fixos
-    #################################################################################################
-    PUBCAP = 0.009    # R$ por m³ captado
-    PUBCONS = 0.020    # R$ por m³ consumido
-    PUBDBO = 0.090     # R$ por kg de DBO lançada
+    ################################################################################################
+    PUBCAP_ALPA = 0.009    # R$ por m³ captado
+    PUBCONS_ALPA = 0.020    # R$ por m³ consumido
+    PUBDBO_ALPA = 0.090     # R$ por kg de DBO lançada
 
     # Captação
     X3_CAP = 1.000
@@ -387,9 +387,9 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     Y4_LANC = 1.000
     
 
-    #################################################################################################
+    ################################################################################################
     # Parâmetros variáveis
-    #################################################################################################
+    ################################################################################################
     # X1: natureza do corpo d'água
     def obter_x1(natureza):
         if natureza == "Superficial":
@@ -426,18 +426,39 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         }
         return valores[taxa_remocao]
     
-    #################################################################################################
+    ################################################################################################
     # Cálculo do KOUT e do KMED
-    ##################################################################################################
+    ################################################################################################
     def obter_kout_kmed(volume_outorgado, volume_medido):
-    if volume_medido <= 0:
-        kout, kmed = 1, 0  # sem medição
-    elif volume_outorgado > 0 and (volume_medido / volume_outorgado) > 1:
-        kout, kmed = 0, 1  # volume medido excede o outorgado
-    else:
-        kout, kmed = 0.2, 0.8  # existe medição, dentro do limite outorgado
+        if volume_medido <= 0:
+            kout, kmed = 1, 0  # sem medição
+        elif volume_outorgado > 0 and (volume_medido / volume_outorgado) > 1:
+            kout, kmed = 0, 1  # volume medido excede o outorgado
+        else:
+            kout, kmed = 0.2, 0.8  # existe medição, dentro do limite outorgado
 
-    return kout, kmed
+        return kout, kmed
+
+    ################################################################################################
+    # Calcular o PUF para captação, consumo e lançamento
+    ################################################################################################
+    def calcular_puf_cap(natureza, classe_de_uso, PUBCAP_ALPA, x3_cap, x5_cap, x7_cap, x13_cap):
+        x1 = obter_x1(natureza)
+        x2 = obter_x2(classe_de_uso)
+        PUF_CAP = PUBCAP_ALPA * x1 * x2 * x3_cap * x5_cap * x7_cap * x13_cap
+        return PUF_CAP
+
+
+    def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        return PUF_CONS
+
+
+    def calcular_puf_lanc(classe_de_uso, taxa_remocao, PUBDBO_ALPA, y4_lanc):
+        y1 = obter_y1(classe_de_uso)
+        y3 = obter_y3(taxa_remocao)
+        PUF_DBO = PUBDBO_ALPA * y1 * y3 * y4_lanc
+        return PUF_DBO
 
 
     return {
