@@ -472,7 +472,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         return V_CAP
 
     ################################################################################################
-    # Calcular o Volume Lançado de cada uso V_LANC 
+    # Calcular o Volume Lançado de cada uso V_LANC
     ################################################################################################
     def calcular_v_lanc(volume_outorgado, volume_medido):
         if volume_medido > 0:
@@ -481,9 +481,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
             V_LANC = volume_outorgado
         return V_LANC
 
-
-
-
     ################################################################################################
     # Loop pela tabela de captação: soma VCAPT (volume) e valor_captacao_total (R$)
     ################################################################################################
@@ -491,14 +488,16 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_captacao_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         VCAPT += v_cap
 
-        puf_cap = calcular_puf_cap(linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
-        valor_captacao_total += v_cap * puf_cap 
+        puf_cap = calcular_puf_cap(
+            linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
+        valor_captacao_total += v_cap * puf_cap
 
     return {
         "captacao": valor_captacao_total,
@@ -506,8 +505,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         "lancamento": valor_lancamento_total,
         "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
     }
-
-
 
 
 ####################################################################################################
@@ -711,8 +708,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 # Consumo	  |                 	      |     X1-X3, X5-X7, X13     |        X4, X8-X12         |#
 # Lançamento  |          Y3, Y4           |            Y1             |                 	      |#
 # -------------------------------------------------------------------------------------------------#
-
-
 ####################################################################################################
 #                                     Coeficientes Tietê/Jacaré                                    #
 ####################################################################################################
