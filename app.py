@@ -515,7 +515,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # ---------- CONSUMO ----------
     # Volume consumido = o que foi captado e não voltou ao corpo d'água.
     # Todos os fatores X do consumo valem 1, então o valor é direto.
-    volume_consumido = max(0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
+    volume_consumido = max(
+        0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
     valor_consumo_total = volume_consumido * PUBCONS
 
     return {
