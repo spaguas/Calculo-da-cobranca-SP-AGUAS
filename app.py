@@ -491,10 +491,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     }
 
     for _, linha in tabela_lancamento.iterrows():
-        v_pond = volume_ponderado(
-            linha["Vazão outorgada (m³/h)"], linha["Horas/Dia"], linha["Dias/Ano"],
-            linha["Volume anual medido (m³)"],
-        )
+        v_pond = volume_ponderado(linha["Vazão outorgada (m³/h)"], linha["Horas/Dia"], linha["Dias/Ano"], linha["Volume anual medido (m³)"],)
         volume_lancamento_ponderado_total += v_pond
 
         carga_dbo_kg = v_pond * linha["DBO (mg/L)"] / 1000  # mg/L x m³ -> kg
