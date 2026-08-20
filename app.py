@@ -362,9 +362,6 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 # -------------------------------------------------------------------------------------------------#
 
 def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
-    """
-    Cobrança pelo uso da água — Alto Paranapanema (UGRHI-14), conforme Decreto Estadual nº 63.263/2018.
-    """
     # Parâmetros constantes/fixos
     PUBCAP = 0.009    # R$ por m³ captado
     PUBCONS = 0.02    # R$ por m³ consumido
@@ -387,6 +384,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Lançamento
     Y4_LANC = 1.0
+
+
 
     return {
         "captacao": valor_captacao_total,
