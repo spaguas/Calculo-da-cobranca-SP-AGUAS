@@ -183,7 +183,7 @@ tabela_uso_1 = st.data_editor(
         ),
         "Classe de uso": st.column_config.SelectboxColumn(
             "Classe de uso",
-            help="Classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação: Classe 1, Classe 2, Classe 3 ou Classe 4",
+            help="A classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação: Classe 1, Classe 2, Classe 3 ou Classe 4 - Decreto Estadual nº 10.755/77",
             options=["Classe 1", "Classe 2", "Classe 3", "Classe 4"],
             required=True,
             width="small",
