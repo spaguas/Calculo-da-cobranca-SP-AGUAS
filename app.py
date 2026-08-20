@@ -482,7 +482,15 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         return V_LANC
 
     ################################################################################################
-    # Loop pela tabela de captação: soma VCAPT (volume) e valor_captacao_total (R$)
+    # Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
+    ################################################################################################
+    def calcular_vcl(concentracao_dbo, v_lanc, puf_dbo):
+        q_dbo = concentracao_dbo / 1000  # mg/L -> kg/m³
+        VCL = q_dbo * v_lanc * puf_dbo
+        return VCL
+
+    ################################################################################################
+    # Cálculo do valor do volume de captação total do empreendimento VCAPT
     ################################################################################################
     VCAPT = 0.0
     valor_captacao_total = 0.0
