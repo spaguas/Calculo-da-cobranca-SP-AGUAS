@@ -361,159 +361,36 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 # Lançamento  |            Y1, Y3         |             Y4	          |         Y2, Y5-Y9         |#
 # -------------------------------------------------------------------------------------------------#
 
-# PUB: Preços Unitários Básicos
-# PUBCAP_ALPA = 0.009 # Captação
-# PUBCONS_ALPA = 0.02 # Consumo
-# PUBDBO_ALPA = 0.09  # Lançamento
-
-# KOUT: Peso atribuído ao volume de captação outorgado
-# KMED: Peso atribuído ao volume de captação medido
-# if VCAPMED/VCAPOUT > 1:
-#     KOUT = 0
-#     KMED = 1
-# else:
-#     if medicao == 'Existe medição':
-#        KOUT = 0.2
-#        KMED = 0.8
-#    elif medicao == 'Não existe medição':
-#        KOUT = 1
-#        KMED = 0
-
-# X1: A natureza do corpo d'água
-# if natureza == 'Superficial':
-#    X1_ALPA = 1
-# elif natureza == 'Subterrâneo':
-#    X1_ALPA = 1.05
-
-# X2: A classe de uso em que estiver enquadrado o corpo d'água no local do uso ou da derivação
-# if classe == 'Classe 1':
-#    X2_ALPA = 1
-# elif classe == 'Classe 2':
-#    X2_ALPA = 1
-# elif classe == 'Classe 3':
-#    X2_ALPA = 0.95
-# elif classe == 'Classe 4':
-#    X2_ALPA = 0.90
-
-# X3: A disponibilidade hídrica local
-# X3_ALPA = 1
-
-# X5: O volume captado, extraído ou derivado e seu regime de variação
-# X5_ALPA = 1
-
-# X7: A finalidade de uso
-# X7_ALPA = 1
-
-# X13: Transposição
-# X13_ALPA = 1
-
-# Y1: Classe de uso preponderante do corpo d'água receptor
-# if classe == 'Classe 2':
-#    Y1_ALPA = 1
-# elif classe == 'Classe 3':
-#    Y1_ALPA = 0.95
-# elif classe == 'Classe 4':
-#    Y1_ALPA = 0.90
-
-# Y3: A carga lançada e seu regime de  variação, atendido o padrão de emissão requerido para o local
-# if classe == 'Maior que 95% de remoção':
-#    Y3_ALPA = 0.80
-# elif classe == 'Maior que 90% e menor que 95% de remoção':
-#    Y3_ALPA = 0.85
-# elif classe == 'Maior que 85% e menor que 90% de remoção':
-#    Y3_ALPA = 0.90
-# elif classe == 'Maior que 80% e menor que 85% de remoção':
-#    Y3_ALPA = 0.95
-# elif classe == 'Igual a 80% de remoção':
-#    Y3_ALPA = 1
-
-# Y4: A natureza da atividade
-# Y4_ALPA = 1
-
-
 def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     """
-    Cobrança pelo uso da água — Alto Paranapanema (UGRHI-14),
-    conforme Decreto Estadual nº 63.263/2018.
+    Cobrança pelo uso da água — Alto Paranapanema (UGRHI-14), conforme Decreto Estadual nº 63.263/2018.
     """
+    # Parâmetros constantes/fixos
     PUBCAP = 0.009    # R$ por m³ captado
     PUBCONS = 0.02    # R$ por m³ consumido
     PUBDBO = 0.09     # R$ por kg de DBO lançada
 
-    def volume_ponderado(vazao_outorgada, horas, dias, volume_medido_anual):
-        """Volume ponderado por KOUT/KMED, em m³/ano."""
-        v_outorgado = vazao_outorgada * horas * dias
-        v_medido = volume_medido_anual
+    # Captação
+    X3_CAP = 1.0      
+    X5_CAP = 1.0
+    X7_CAP = 1.0
+    X13_CAP = 1.0
 
-        if v_medido <= 0:
-            kout, kmed = 1, 0  # sem medição (nada preenchido = 0)
-        elif v_outorgado > 0 and (v_medido / v_outorgado) > 1:
-            kout, kmed = 0, 1
-        else:
-            kout, kmed = 0.2, 0.8
+    # Consumo
+    X1_CONS = 1.0
+    X2_CONS = 1.0
+    X3_CONS = 1.0
+    X5_CONS = 1.0
+    X6_CONS = 1.0
+    X7_CONS = 1.0
+    X13_CONS = 1.0
 
-        return kout * v_outorgado + kmed * v_medido
+    # Lançamento
+    Y4_LANC = 1.0
 
-    # ---------- CAPTAÇÃO ----------
-    valor_captacao_total = 0.0
-    volume_captacao_ponderado_total = 0.0
 
-    for _, linha in tabela_captacao.iterrows():
-        v_pond = volume_ponderado(
-            linha["Vazão outorgada (m³/h)"], linha["Horas/Dia"], linha["Dias/Ano"],
-            linha["Volume anual medido (m³)"],
-        )
-        volume_captacao_ponderado_total += v_pond
+    
 
-        x1 = 1.0 if linha["Natureza"] == "Superficial" else 1.05
-
-        classe = linha["Classe de uso"]
-        if classe in ("Classe 1", "Classe 2"):
-            x2 = 1.0
-        elif classe == "Classe 3":
-            x2 = 0.95
-        else:  # Classe 4
-            x2 = 0.90
-
-        # X3, X5, X7, X13 fixos em 1 — X4,X6,X8-X12 não se aplicam à captação
-        valor_captacao_total += v_pond * PUBCAP * x1 * x2
-
-    # ---------- LANÇAMENTO ----------
-    valor_lancamento_total = 0.0
-    volume_lancamento_ponderado_total = 0.0
-
-    y3_por_taxa_remocao = {
-        "> 95% de remoção": 0.80,
-        "> 90% e ≤ 95% de remoção": 0.85,
-        "> 85% e ≤ 90% de remoção": 0.90,
-        "> 80% e ≤ 85% de remoção": 0.95,
-        "≤ 80% de remoção": 1.00,
-    }
-
-    for _, linha in tabela_lancamento.iterrows():
-        v_pond = volume_ponderado(linha["Vazão outorgada (m³/h)"], linha["Horas/Dia"], linha["Dias/Ano"], linha["Volume anual medido (m³)"],)
-        volume_lancamento_ponderado_total += v_pond
-
-        carga_dbo_kg = v_pond * linha["DBO (mg/L)"] / 1000  # mg/L x m³ -> kg
-
-        classe = linha["Classe de uso"]
-        if classe == "Classe 2":
-            y1 = 1.0
-        elif classe == "Classe 3":
-            y1 = 0.95
-        else:  # Classe 4
-            y1 = 0.90
-
-        y3 = y3_por_taxa_remocao[linha["Taxa de remoção (%)"]]
-
-        # Y4 fixo em 1 — Y2,Y5-Y9 não se aplicam ao lançamento
-        valor_lancamento_total += carga_dbo_kg * PUBDBO * y1 * y3
-
-    # ---------- CONSUMO ----------
-    # Volume consumido = o que foi captado e não voltou ao corpo d'água.
-    # Todos os fatores X do consumo valem 1, então o valor é direto.
-    volume_consumido = max(0, volume_captacao_ponderado_total - volume_lancamento_ponderado_total)
-    valor_consumo_total = volume_consumido * PUBCONS
 
     return {
         "captacao": valor_captacao_total,
@@ -521,6 +398,10 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         "lancamento": valor_lancamento_total,
         "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
     }
+
+
+
+
 
 
 ####################################################################################################
