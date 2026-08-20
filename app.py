@@ -371,7 +371,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     PUBDBO = 0.09     # R$ por kg de DBO lançada
 
     # Captação
-    X3_CAP = 1.0      
+    X3_CAP = 1.0
     X5_CAP = 1.0
     X7_CAP = 1.0
     X13_CAP = 1.0
@@ -388,20 +388,12 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # Lançamento
     Y4_LANC = 1.0
 
-
-    
-
-
     return {
         "captacao": valor_captacao_total,
         "consumo": valor_consumo_total,
         "lancamento": valor_lancamento_total,
         "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
     }
-
-
-
-
 
 
 ####################################################################################################
@@ -617,8 +609,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 # Consumo	  |                           |     X1-X3, X5-X7, X13     |         X4, X8-X12        |#
 # Lançamento  |             Y3            |          Y1, Y4           |         Y2, Y5-Y9         |#
 # -------------------------------------------------------------------------------------------------#
-
-
 ####################################################################################################
 #                                     Coeficientes Turvo/Grande                                    #
 ####################################################################################################
@@ -629,8 +619,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 # Consumo	  |                 	      |     X1-X3, X5-X7, X13     |         X4, X8-X12        |#
 # Lançamento  |          Y1, Y3           |            Y4             |         Y2, Y5-Y9         |#
 # -------------------------------------------------------------------------------------------------#
-
-
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Seleção da função de cálculo de acordo com a bacia hidrográfica selecionada.
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
