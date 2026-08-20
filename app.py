@@ -272,7 +272,8 @@ tabela_uso_2 = st.data_editor(
         "Taxa de remoção (%)": st.column_config.SelectboxColumn(
             "Taxa de remoção (%)",
             help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
-            options=["> 95% de remoção", "> 90% e ≤ 95% de remoção", "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
+            options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
+                     "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
             required=True,
             width="medium",
         ),
@@ -385,19 +386,19 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Lançamento
     Y4_LANC = 1.000
-    
 
     ################################################################################################
     # Parâmetros variáveis
     ################################################################################################
     # X1: natureza do corpo d'água
+
     def obter_x1(natureza):
         if natureza == "Superficial":
             return 1.000
         else:  # Subterrâneo
             return 1.050
 
-    # X2: classe de uso do corpo d'água na captação 
+    # X2: classe de uso do corpo d'água na captação
     def obter_x2(classe_de_uso):
         if classe_de_uso in ("Classe 1", "Classe 2"):
             return 1.000
@@ -406,7 +407,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         else:  # Classe 4
             return 0.900
 
-    # Y1: classe de uso do corpo d'água receptor no lançamento 
+    # Y1: classe de uso do corpo d'água receptor no lançamento
     def obter_y1(classe_de_uso):
         if classe_de_uso == "Classe 2":
             return 1.000
@@ -425,7 +426,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
             "≤ 80% de remoção": 1.000,
         }
         return valores[taxa_remocao]
-    
+
     ################################################################################################
     # Cálculo do KOUT e do KMED
     ################################################################################################
@@ -451,7 +452,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
+            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -468,9 +470,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         kout, kmed = obter_kout_kmed(volume_outorgado, volume_medido)
         V_CAP = volume_outorgado * kout + volume_medido * kmed
         return V_CAP
-
-
-
 
     return {
         "captacao": valor_captacao_total,
