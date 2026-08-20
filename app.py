@@ -490,7 +490,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         return VCL
 
     ################################################################################################
-    # Cálculo do valor do volume de captação total do empreendimento VCAPT
+    # Cálculo do valor do volume de captação total do empreendimento VCAPT  (e do valor a ser pago)
     ################################################################################################
     VCAPT = 0.0
     valor_captacao_total = 0.0
@@ -506,6 +506,39 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         puf_cap = calcular_puf_cap(
             linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
         valor_captacao_total += v_cap * puf_cap
+
+
+    
+    ################################################################################################
+    # Cálculo do valor do volume de lançamento total do empreendimento VLANCT (e do valor a ser pago)
+    ################################################################################################
+    V_LANCT = 0.0
+    valor_lancamento_total = 0.0
+
+    for _, linha in tabela_lancamento.iterrows():
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_medido = linha["Volume anual medido (m³)"]
+
+        v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
+        V_LANCT += v_lanc
+
+        puf_dbo = calcular_puf_lanc(
+            linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
+        vcl = calcular_vcl(linha["DBO (mg/L)"], v_lanc, puf_dbo)
+        valor_lancamento_total += vcl
+
+
+
+
+
+
+
+
+
+
+
+
 
     return {
         "captacao": valor_captacao_total,
