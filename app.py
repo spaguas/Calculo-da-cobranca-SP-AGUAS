@@ -362,7 +362,9 @@ st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
 # -------------------------------------------------------------------------------------------------#
 
 def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
+    #################################################################################################
     # Parâmetros constantes/fixos
+    #################################################################################################
     PUBCAP = 0.009    # R$ por m³ captado
     PUBCONS = 0.02    # R$ por m³ consumido
     PUBDBO = 0.09     # R$ por kg de DBO lançada
@@ -384,6 +386,47 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Lançamento
     Y4_LANC = 1.0
+    
+
+    #################################################################################################
+    # Parâmetros variáveis
+    #################################################################################################
+    # X1: natureza do corpo d'água
+    def obter_x1(natureza):
+        if natureza == "Superficial":
+            return 1.0
+        else:  # Subterrâneo
+            return 1.05
+
+    # X2: classe de uso do corpo d'água na captação 
+    def obter_x2(classe_de_uso):
+        if classe_de_uso in ("Classe 1", "Classe 2"):
+            return 1.0
+        elif classe_de_uso == "Classe 3":
+            return 0.95
+        else:  # Classe 4
+            return 0.90
+
+    # Y1: classe de uso do corpo d'água receptor no lançamento 
+    def obter_y1(classe_de_uso):
+        if classe_de_uso == "Classe 2":
+            return 1.0
+        elif classe_de_uso == "Classe 3":
+            return 0.95
+        else:  # Classe 4
+            return 0.90
+
+    # Y3: taxa de remoção da carga lançada
+    def obter_y3(taxa_remocao):
+        valores = {
+            "> 95% de remoção": 0.80,
+            "> 90% e ≤ 95% de remoção": 0.85,
+            "> 85% e ≤ 90% de remoção": 0.90,
+            "> 80% e ≤ 85% de remoção": 0.95,
+            "≤ 80% de remoção": 1.00,
+        }
+        return valores[taxa_remocao]
+    #################################################################################################
 
 
 
