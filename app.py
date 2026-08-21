@@ -480,13 +480,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
             V_LANC = volume_outorgado
         return V_LANC
 
-    ################################################################################################
-    # Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
-    ################################################################################################
-    def calcular_vcl(concentracao_dbo, v_lanc, puf_dbo):
-        q_dbo = concentracao_dbo / 1000  # mg/L -> kg/m³
-        VCL = q_dbo * v_lanc * puf_dbo
-        return VCL
 
     ################################################################################################
     # Cálculo do valor do volume de captação total do empreendimento VCAPT  (e do valor a ser pago)
@@ -544,9 +537,32 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # Cálculo do volume consumido de cada uso V_CONS
     ################################################################################################
     def calcular_v_cons(FC, v_cap):
-        """VCONS: volume consumido de um uso específico (item 5.2 do decreto)."""
         V_CONS = FC * v_cap
         return V_CONS
+
+
+
+
+
+
+
+
+
+
+
+    ################################################################################################
+    # Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
+    ################################################################################################
+    def calcular_vcl(concentracao_dbo, v_lanc, puf_dbo):
+        q_dbo = concentracao_dbo / 1000  # mg/L -> kg/m³
+        VCL = q_dbo * v_lanc * puf_dbo
+        return VCL
+
+
+
+
+
+
 
 ####################################################################################################
 #                                      Coeficientes Alto Tietê                                     #
