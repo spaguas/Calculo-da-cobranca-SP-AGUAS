@@ -496,7 +496,25 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         V_CONS = FC * v_cap
         return V_CONS
 
+    ################################################################################################
+    # Cálculo final do uso: VTanual = VCC + VCCO + VCL
+    ################################################################################################
+    # 1ª Parcela: Cálculo do pagamento pela captação de cada uso VCC
+    def calcular_vcc(v_cap, puf_cap):
+        """VCC: pagamento pela captação de um uso específico (item 5.1 do decreto)."""
+        VCC = v_cap * puf_cap
+        return VCC
 
+    # 2ª Parcela: Cálculo do pagamento pelo consumo de cada uso VCCO
+    def calcular_vcco(v_cons, puf_cons):
+        VCCO = v_cons * puf_cons
+        return VCCO
+
+    # 3ª Parcela: Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
+    def calcular_vcl(concentracao_dbo, v_lanc, puf_dbo):
+        q_dbo = concentracao_dbo / 1000  # mg/L -> kg/m³
+        VCL = q_dbo * v_lanc * puf_dbo
+        return VCL
 
 
     ################################################################################################
@@ -544,25 +562,18 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     ################################################################################################
     # Cálculo final do uso: VTanual = VCC + VCCO + VCL
     ################################################################################################
-
-    ################################################################################################
     # 1ª Parcela: Cálculo do pagamento pela captação de cada uso VCC
-    ################################################################################################
     def calcular_vcc(v_cap, puf_cap):
         """VCC: pagamento pela captação de um uso específico (item 5.1 do decreto)."""
         VCC = v_cap * puf_cap
         return VCC
 
-    ################################################################################################
     # 2ª Parcela: Cálculo do pagamento pelo consumo de cada uso VCCO
-    ################################################################################################
     def calcular_vcco(v_cons, puf_cons):
         VCCO = v_cons * puf_cons
         return VCCO
 
-    ################################################################################################
     # 3ª Parcela: Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
-    ################################################################################################
     def calcular_vcl(concentracao_dbo, v_lanc, puf_dbo):
         q_dbo = concentracao_dbo / 1000  # mg/L -> kg/m³
         VCL = q_dbo * v_lanc * puf_dbo
