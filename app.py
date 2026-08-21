@@ -571,8 +571,9 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         )
         valor_consumo_total += calcular_vcco(v_cons, puf_cons)
 
-
-
+    ################################################################################################
+    # Retorno dos valores calculados
+    ################################################################################################
      return {
         "captacao": valor_captacao_total,
         "consumo": valor_consumo_total,
