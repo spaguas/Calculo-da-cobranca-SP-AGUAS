@@ -542,6 +542,14 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     }
 
 
+    ################################################################################################
+    # Cálculo do volume consumido de cada uso V_CONS
+    ################################################################################################
+    def calcular_v_cons(FC, v_cap):
+        """VCONS: volume consumido de um uso específico (item 5.2 do decreto)."""
+        V_CONS = FC * v_cap
+        return V_CONS
+
 ####################################################################################################
 #                                      Coeficientes Alto Tietê                                     #
 ####################################################################################################
