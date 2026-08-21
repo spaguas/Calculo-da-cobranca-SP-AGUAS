@@ -540,9 +540,13 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # Cálculo final do empreendimento: VTanual = VCC + VCCO + VCL
     ################################################################################################
 
-
-
-
+    ################################################################################################
+    # 1ª Parcela: Cálculo do pagamento pela captação de cada uso VCC
+    ################################################################################################
+    def calcular_vcc(v_cap, puf_cap):
+        """VCC: pagamento pela captação de um uso específico (item 5.1 do decreto)."""
+        VCC = v_cap * puf_cap
+        return VCC
 
     ################################################################################################
     # 2ª Parcela: Cálculo do pagamento pelo consumo de cada uso VCCO
@@ -550,7 +554,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     def calcular_vcco(v_cons, puf_cons):
         VCCO = v_cons * puf_cons
         return VCCO
-
 
     ################################################################################################
     # 3ª Parcela: Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
@@ -562,10 +565,10 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
 
     return {
-        "captacao": valor_captacao_total,
-        "consumo": valor_consumo_total,
-        "lancamento": valor_lancamento_total,
-        "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
+        "captacao": ,
+        "consumo": ,
+        "lancamento": ,
+        "total": ,
     }
 
 
