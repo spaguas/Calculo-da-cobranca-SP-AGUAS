@@ -528,8 +528,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         VCAPT += v_cap
 
-        puf_cap = calcular_puf_cap(
-            linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
+        puf_cap = calcular_puf_cap(linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
         valor_captacao_total += calcular_vcc(v_cap, puf_cap)
 
     ################################################################################################
