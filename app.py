@@ -544,10 +544,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
         V_LANCT += v_lanc
 
-        puf_dbo = calcular_puf_lanc(
-            linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
-        valor_lancamento_total += calcular_vcl(
-            linha["DBO (mg/L)"], v_lanc, puf_dbo)
+        puf_dbo = calcular_puf_lanc(linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
+        valor_lancamento_total += calcular_vcl(linha["DBO (mg/L)"], v_lanc, puf_dbo)
 
     ################################################################################################
     # Fator de consumo FC = (VCAPT - V_LANCT) / VCAPT
@@ -566,8 +564,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         v_cons = calcular_v_cons(FC, v_cap)
 
-        puf_cons = calcular_puf_cons(
-            PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
+        puf_cons = calcular_puf_cons(PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
         valor_consumo_total += calcular_vcco(v_cons, puf_cons)
 
     ################################################################################################
