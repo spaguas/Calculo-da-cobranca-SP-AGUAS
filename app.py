@@ -43,7 +43,7 @@ st.markdown("""
     }
 
     .block-container {
-        padding-top: 2.9rem;
+        padding-top: 3.5rem;
         padding-bottom: 1rem;
         padding-left: 4rem;
         padding-right: 4rem;
@@ -55,11 +55,11 @@ st.markdown("""
     }
 
     p, li, label, .stMarkdown, .stCaption {
-        font-size: 16px !important;
+        font-size: 14px !important;
     }
 
     [data-testid="stVerticalBlock"] {
-        gap: 0.4rem !important;
+        gap: 0.2rem !important;
     }
 
     [data-testid="stSelectbox"] [role="group"] {
@@ -226,8 +226,7 @@ tabela_uso_1 = st.data_editor(
 )
 
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
-    (len(tabela_uso_1) + 3) + 46
+st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * (len(tabela_uso_1) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -325,8 +324,7 @@ tabela_uso_2 = st.data_editor(
 
 
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
-    (len(tabela_uso_2) + 3) + 46
+st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_2) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -451,7 +449,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
+            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -522,13 +521,15 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_captacao_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         VCAPT += v_cap
 
-        puf_cap = calcular_puf_cap(linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
+        puf_cap = calcular_puf_cap(
+            linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
         valor_captacao_total += calcular_vcc(v_cap, puf_cap)
 
     ################################################################################################
@@ -538,14 +539,17 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_lancamento_total = 0.0
 
     for _, linha in tabela_lancamento.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
         V_LANCT += v_lanc
 
-        puf_dbo = calcular_puf_lanc(linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
-        valor_lancamento_total += calcular_vcl(linha["DBO (mg/L)"], v_lanc, puf_dbo)
+        puf_dbo = calcular_puf_lanc(
+            linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
+        valor_lancamento_total += calcular_vcl(
+            linha["DBO (mg/L)"], v_lanc, puf_dbo)
 
     ################################################################################################
     # Fator de consumo FC = (VCAPT - V_LANCT) / VCAPT
@@ -558,13 +562,15 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_consumo_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         v_cons = calcular_v_cons(FC, v_cap)
 
-        puf_cons = calcular_puf_cons(PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
+        puf_cons = calcular_puf_cons(
+            PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
         valor_consumo_total += calcular_vcco(v_cons, puf_cons)
 
     ################################################################################################
@@ -575,9 +581,15 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         "consumo": valor_consumo_total,
         "lancamento": valor_lancamento_total,
         "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
+        "mensagem": (
+            "Serão considerados usos insignificantes as extrações de águas subterrâneas "
+            "e as derivações ou captações de águas superficiais, bem como os lançamentos "
+            "de efluentes em corpos d'água, até o volume de 05 (cinco) metros cúbicos por "
+            "dia, isoladamente ou em conjunto. Este simulador não verifica automaticamente "
+            "se a isenção se aplica ao seu caso — o valor acima é calculado sem considerar "
+            "possíveis isenções."
+        ),
     }
-
-
 ####################################################################################################
 #                                      Coeficientes Alto Tietê                                     #
 ####################################################################################################
@@ -835,8 +847,7 @@ CALCULADORAS_POR_BACIA = {
 
 col_esq, col_botao, col_dir = st.columns([3, 1, 3])
 with col_botao:
-    calcular = st.button("Calcular", type="primary",
-                         icon="🧮", use_container_width=True)
+    calcular = st.button("Calcular", type="primary", icon="🧮", use_container_width=True)
 
 if calcular:
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
@@ -844,8 +855,7 @@ if calcular:
         if bacia_selecionada is None:
             st.error("Selecione a Bacia Hidrográfica antes de calcular.")
         else:
-            st.error(
-                f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+            st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(4)
@@ -853,6 +863,7 @@ if calcular:
         col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
         col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
         col4.metric("Total", f"R$ {resultado['total']:,.2f}")
+        st.caption(resultado["mensagem"])
 
 
 ###############################################################
