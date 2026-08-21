@@ -514,8 +514,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_lancamento_total = 0.0
 
     for _, linha in tabela_lancamento.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
-            linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
