@@ -451,8 +451,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
-            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons *  x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
