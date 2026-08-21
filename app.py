@@ -54,7 +54,7 @@ st.markdown("""
     }
 
     p, li, label, .stMarkdown, .stCaption {
-        font-size: 14px !important;
+        font-size: 16px !important;
     }
 
     [data-testid="stVerticalBlock"] {
@@ -144,7 +144,7 @@ bacia_selecionada = st.selectbox(
 
 # Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
 ALTURA_LINHA = 25
-LINHAS_VISIVEIS_SEM_SCROLL = 6
+LINHAS_VISIVEIS_SEM_SCROLL = 5
 ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
 st.write("Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
@@ -580,14 +580,11 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         "consumo": valor_consumo_total,
         "lancamento": valor_lancamento_total,
         "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
-        "mensagem": (
-            "Serão considerados usos insignificantes as extrações de águas subterrâneas "
-            "e as derivações ou captações de águas superficiais, bem como os lançamentos "
-            "de efluentes em corpos d'água, até o volume de 05 (cinco) metros cúbicos por "
-            "dia, isoladamente ou em conjunto. Este simulador não verifica automaticamente "
-            "se a isenção se aplica ao seu caso — o valor acima é calculado sem considerar "
-            "possíveis isenções."
-        ),
+        "mensagem": (" De acordo com o decreto nº 63.263, de 9 de março de 2018, \"Serão considerados \
+                     usos insignificantes as extrações de águas subterrâneas e as derivações ou \
+                     captações de águas superficiais, bem como os lançamentos de efluentes em corpos \
+                     d’água, até o volume de 05 (cinco) metros cúbicos por dia, isoladamente ou em \
+                     conjunto\". Para mais informações acesse https://www.al.sp.gov.br/norma/185450"),
     }
 ####################################################################################################
 #                                      Coeficientes Alto Tietê                                     #
@@ -858,10 +855,10 @@ if calcular:
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
         col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
-        col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
-        col3.metric("Lançamento", f"R$ {resultado['lancamento']:,.2f}")
-        col4.metric("Total", f"R$ {resultado['total']:,.2f}")
+        col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
+        col2.metric("**Consumo**", f"R$ {resultado['consumo']:,.2f}")
+        col3.metric("**Lançamento**", f"R$ {resultado['lancamento']:,.2f}")
+        col4.metric("**Total**", f"R$ {resultado['total']:,.2f}")
         st.caption(resultado["mensagem"])
 
 
