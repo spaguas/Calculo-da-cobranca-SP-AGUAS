@@ -526,12 +526,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         # evita fator negativo se o lançamento superar a captação
         return max(0.0, FC)
 
-    return {
-        "captacao": valor_captacao_total,
-        "consumo": valor_consumo_total,
-        "lancamento": valor_lancamento_total,
-        "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
-    }
 
     ################################################################################################
     # Cálculo do volume consumido de cada uso V_CONS
@@ -546,7 +540,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # Cálculo final do empreendimento: VTanual = VCC + VCCO + VCL
     ################################################################################################
 
-    
+
 
 
 
@@ -567,6 +561,12 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         return VCL
 
 
+    return {
+        "captacao": valor_captacao_total,
+        "consumo": valor_consumo_total,
+        "lancamento": valor_lancamento_total,
+        "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
+    }
 
 
 
