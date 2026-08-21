@@ -573,13 +573,12 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
 
 
-    return {
-        "captacao": ,
-        "consumo": ,
-        "lancamento": ,
-        "total": ,
+     return {
+        "captacao": valor_captacao_total,
+        "consumo": valor_consumo_total,
+        "lancamento": valor_lancamento_total,
+        "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
     }
-
 
 
 
