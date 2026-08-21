@@ -502,7 +502,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     ################################################################################################
     # 1ª Parcela: Cálculo do pagamento pela captação de cada uso VCC
     def calcular_vcc(v_cap, puf_cap):
-        """VCC: pagamento pela captação de um uso específico (item 5.1 do decreto)."""
         VCC = v_cap * puf_cap
         return VCC
 
