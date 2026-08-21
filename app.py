@@ -542,16 +542,24 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
 
 
+    ################################################################################################
+    # Cálculo final do empreendimento: VTanual = VCC + VCCO + VCL
+    ################################################################################################
 
-
-
-
-
+    
 
 
 
     ################################################################################################
-    # Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
+    # 2ª Parcela: Cálculo do pagamento pelo consumo de cada uso VCCO
+    ################################################################################################
+    def calcular_vcco(v_cons, puf_cons):
+        VCCO = v_cons * puf_cons
+        return VCCO
+
+
+    ################################################################################################
+    # 3ª Parcela: Cálculo do pagamento anual pelo lançamento de carga poluidora VCL
     ################################################################################################
     def calcular_vcl(concentracao_dbo, v_lanc, puf_dbo):
         q_dbo = concentracao_dbo / 1000  # mg/L -> kg/m³
