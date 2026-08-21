@@ -567,17 +567,13 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_consumo_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
-                                                   linha["Horas/Dia"] * \
-                                                       linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         v_cons = calcular_v_cons(FC, v_cap)
 
-        puf_cons = calcular_puf_cons(
-            PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,
-        )
+        puf_cons = calcular_puf_cons(PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
         valor_consumo_total += calcular_vcco(v_cons, puf_cons)
 
     ################################################################################################
