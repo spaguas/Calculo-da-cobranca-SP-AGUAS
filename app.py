@@ -451,7 +451,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
+            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -522,7 +523,9 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_captacao_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+                                                   linha["Horas/Dia"] * \
+                                                       linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
@@ -539,14 +542,18 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_lancamento_total = 0.0
 
     for _, linha in tabela_lancamento.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] *  linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+                                                   linha["Horas/Dia"] * \
+                                                       linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
         V_LANCT += v_lanc
 
-        puf_dbo = calcular_puf_lanc(linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
-        valor_lancamento_total += calcular_vcl(linha["DBO (mg/L)"], v_lanc, puf_dbo)
+        puf_dbo = calcular_puf_lanc(
+            linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
+        valor_lancamento_total += calcular_vcl(
+            linha["DBO (mg/L)"], v_lanc, puf_dbo)
 
     ################################################################################################
     # Fator de consumo FC = (VCAPT - V_LANCT) / VCAPT
@@ -559,13 +566,16 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_consumo_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+                                                   linha["Horas/Dia"] * \
+                                                       linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         v_cons = calcular_v_cons(FC, v_cap)
 
-        puf_cons = calcular_puf_cons(PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
+        puf_cons = calcular_puf_cons(
+            PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
         valor_consumo_total += calcular_vcco(v_cons, puf_cons)
 
     ################################################################################################
