@@ -57,11 +57,11 @@ st.markdown("""
     p, li, label, .stMarkdown, .stCaption {
         font-size: 16px !important;
     }
-    
+
     [data-testid="stVerticalBlock"] {
         gap: 0.4rem !important;
     }
-            
+
     [data-testid="stSelectbox"] [role="group"] {
         background-color: #D0D8E4 !important;
     }
@@ -451,7 +451,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons *  x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
+            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -516,7 +517,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         VCL = q_dbo * v_lanc * puf_dbo
         return VCL
 
-
     ################################################################################################
     # 1º loop: percorre a tabela de captação -> VCAPT (volume) e valor_captacao_total (R$)
     ################################################################################################
@@ -524,13 +524,16 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_captacao_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+                                                   linha["Horas/Dia"] * \
+                                                       linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
         VCAPT += v_cap
 
-        puf_cap = calcular_puf_cap(linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
+        puf_cap = calcular_puf_cap(
+            linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
         valor_captacao_total += calcular_vcc(v_cap, puf_cap)
 
     ################################################################################################
@@ -540,14 +543,18 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_lancamento_total = 0.0
 
     for _, linha in tabela_lancamento.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+                                                   linha["Horas/Dia"] * \
+                                                       linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
         V_LANCT += v_lanc
 
-        puf_dbo = calcular_puf_lanc(linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
-        valor_lancamento_total += calcular_vcl(linha["DBO (mg/L)"], v_lanc, puf_dbo)
+        puf_dbo = calcular_puf_lanc(
+            linha["Classe de uso"], linha["Taxa de remoção (%)"], PUBDBO_ALPA, Y4_LANC,)
+        valor_lancamento_total += calcular_vcl(
+            linha["DBO (mg/L)"], v_lanc, puf_dbo)
 
     ################################################################################################
     # Fator de consumo FC = (VCAPT - V_LANCT) / VCAPT
@@ -560,7 +567,9 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_consumo_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+                                                   linha["Horas/Dia"] * \
+                                                       linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
