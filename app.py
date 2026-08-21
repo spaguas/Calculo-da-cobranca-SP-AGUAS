@@ -70,6 +70,17 @@ st.markdown("""
         background-color: rgba(255, 43, 43, 0.4) !important;
         border: 1px solid rgba(255, 43, 43, 1) !important;
     }
+   
+    [data-testid="stMetricValue"] p {
+        font-size: 25px !important;
+    }
+
+    [data-testid="stCaptionContainer"] {
+        opacity: 1 !important;
+    }
+    [data-testid="stCaptionContainer"] p {
+        font-size: 14px !important;
+    }
 
     </style>
 """, unsafe_allow_html=True)
@@ -580,11 +591,11 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         "consumo": valor_consumo_total,
         "lancamento": valor_lancamento_total,
         "total": valor_captacao_total + valor_consumo_total + valor_lancamento_total,
-        "mensagem": (" De acordo com o decreto nº 63.263, de 9 de março de 2018, \"Serão considerados \
+        "mensagem": (" De acordo com o decreto nº 63.263, de 9 de março de 2018: \"Serão considerados \
                      usos insignificantes as extrações de águas subterrâneas e as derivações ou \
                      captações de águas superficiais, bem como os lançamentos de efluentes em corpos \
                      d’água, até o volume de 05 (cinco) metros cúbicos por dia, isoladamente ou em \
-                     conjunto\". Para mais informações acesse https://www.al.sp.gov.br/norma/185450"),
+                     conjunto\". Para mais informações acesse: www.al.sp.gov.br/norma/185450"),
     }
 ####################################################################################################
 #                                      Coeficientes Alto Tietê                                     #
@@ -858,7 +869,7 @@ if calcular:
         col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
         col2.metric("**Consumo**", f"R$ {resultado['consumo']:,.2f}")
         col3.metric("**Lançamento**", f"R$ {resultado['lancamento']:,.2f}")
-        col4.metric("**Total**", f"R$ {resultado['total']:,.2f}")
+        col4.metric("**Total**", f"**R$ {resultado['total']:,.2f}**")
         st.caption(resultado["mensagem"])
 
 
