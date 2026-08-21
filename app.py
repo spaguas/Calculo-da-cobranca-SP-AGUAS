@@ -47,7 +47,6 @@ st.markdown("""
         padding-bottom: 1rem;
         padding-left: 4rem;
         padding-right: 4rem;
-        max-width: 12350px;
     }
 
     h1 {
