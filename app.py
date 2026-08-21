@@ -479,6 +479,15 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
             V_LANC = volume_outorgado
         return V_LANC
 
+    ################################################################################################
+    # Cálculo do fator de consumo FC
+    ################################################################################################
+    def calcular_fc(VCAPT, V_LANCT):
+        if VCAPT <= 0:
+            return 0.0  # sem captação declarada, não há base para calcular consumo
+        FC = (VCAPT - V_LANCT) / VCAPT
+        # evita fator negativo se o lançamento superar a captação
+        return max(0.0, FC)
 
     ################################################################################################
     # Cálculo do valor do volume de captação total do empreendimento VCAPT  (e do valor a ser pago)
@@ -515,15 +524,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         vcl = calcular_vcl(linha["DBO (mg/L)"], v_lanc, puf_dbo)
         valor_lancamento_total += vcl
 
-    ################################################################################################
-    # Cálculo do fator de consumo FC
-    ################################################################################################
-    def calcular_fc(VCAPT, V_LANCT):
-        if VCAPT <= 0:
-            return 0.0  # sem captação declarada, não há base para calcular consumo
-        FC = (VCAPT - V_LANCT) / VCAPT
-        # evita fator negativo se o lançamento superar a captação
-        return max(0.0, FC)
+
 
 
     ################################################################################################
