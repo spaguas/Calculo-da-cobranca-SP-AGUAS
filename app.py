@@ -437,7 +437,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
             kout, kmed = 0, 1  # volume medido excede o outorgado
         else:
             kout, kmed = 0.2, 0.8  # existe medição, dentro do limite outorgado
-
         return kout, kmed
 
     ################################################################################################
