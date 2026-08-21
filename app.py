@@ -490,6 +490,16 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         return max(0.0, FC)
 
     ################################################################################################
+    # Cálculo do volume consumido de cada uso V_CONS
+    ################################################################################################
+    def calcular_v_cons(FC, v_cap):
+        V_CONS = FC * v_cap
+        return V_CONS
+
+
+
+
+    ################################################################################################
     # Cálculo do valor do volume de captação total do empreendimento VCAPT  (e do valor a ser pago)
     ################################################################################################
     VCAPT = 0.0
@@ -527,12 +537,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
 
 
-    ################################################################################################
-    # Cálculo do volume consumido de cada uso V_CONS
-    ################################################################################################
-    def calcular_v_cons(FC, v_cap):
-        V_CONS = FC * v_cap
-        return V_CONS
+
 
 
 
