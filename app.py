@@ -10,7 +10,7 @@
 # | R0 G117 B255   | **#0075FF** | Azul vibrante          |
 # | R149 G183 B255 | **#95B7FF** | Azul pervinca          |
 # | R0 G0 B0       | **#000000** | Preto                  |
-# --------------------------------------------------------
+# ---------------------------------------------------------
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -172,8 +172,7 @@ tabela_uso_padrao_1 = pd.DataFrame({
 
 # Altura total da tabela, calculada dinamicamente para caber todas as linhas sem precisar de barra de rolagem interna.
 # if "altura_tabela_uso_1" not in st.session_state:
-#    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
-#        (len(tabela_uso_padrao_1) + 3) + 46
+#    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * (len(tabela_uso_padrao_1) + 3) + 46
 
 tabela_uso_1 = st.data_editor(
     tabela_uso_padrao_1,
@@ -236,8 +235,7 @@ tabela_uso_1 = st.data_editor(
 )
 
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
-    (len(tabela_uso_1) + 3) + 46
+st.session_state.altura_tabela_uso_1 = ALTURA_LINHA *  (len(tabela_uso_1) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -260,8 +258,7 @@ tabela_uso_padrao_2 = pd.DataFrame({
 
 # Altura total da tabela, calculada dinamicamente para caber todas as linhas sem precisar de barra de rolagem interna.
 # if "altura_tabela_uso_2" not in st.session_state:
-#    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
-#        (len(tabela_uso_padrao_2) + 3) + 46
+#    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_padrao_2) + 3) + 46
 
 tabela_uso_2 = st.data_editor(
     tabela_uso_padrao_2,
@@ -335,8 +332,7 @@ tabela_uso_2 = st.data_editor(
 
 
 # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
-    (len(tabela_uso_2) + 3) + 46
+st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_2) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -461,8 +457,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
-            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -533,8 +528,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_captacao_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
-            linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
@@ -551,8 +545,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_lancamento_total = 0.0
 
     for _, linha in tabela_lancamento.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
-            linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
@@ -574,8 +567,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_consumo_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
-            linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
