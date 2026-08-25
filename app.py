@@ -148,191 +148,191 @@ bacia_selecionada = st.selectbox(
     label_visibility="collapsed",
 )
 
-# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Preenchimento da tabela de Captação
-# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+##################################################################################################################################################################################################
+# Tabelas de Captação/Consumo e Lançamento para o ALTO PARANAPANEMA
+##################################################################################################################################################################################################
+
+if bacia_selecionada == 'Alto Paranapanema':
+    # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    # Preenchimento da tabela de Captação
+    # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-# Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
-ALTURA_LINHA = 25
-LINHAS_VISIVEIS_SEM_SCROLL = 5
-ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
-
-st.write("Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
-
-tabela_uso_padrao_1 = pd.DataFrame({
-    "Natureza": pd.Series(dtype="str"),
-    "Classe de uso": pd.Series(dtype="str"),
-    "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
-    "Horas/Dia": pd.Series(dtype="float"),
-    "Dias/Ano": pd.Series(dtype="int"),
-    "Volume anual medido (m³)": pd.Series(dtype="float"),
-})
+    # Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
+    ALTURA_LINHA = 25
+    LINHAS_VISIVEIS_SEM_SCROLL = 5
+    ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
 
-# Altura total da tabela, calculada dinamicamente para caber todas as linhas sem precisar de barra de rolagem interna.
-# if "altura_tabela_uso_1" not in st.session_state:
-#    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * (len(tabela_uso_padrao_1) + 3) + 46
+    # Mensagem para solicitação de preenchimento da tabela de captação/consumo
+    st.write("Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
 
-tabela_uso_1 = st.data_editor(
-    tabela_uso_padrao_1,
-    num_rows="dynamic",
-    hide_index=True,
-    use_container_width=True,
-    height=ALTURA_TABELA,
-    row_height=ALTURA_LINHA,
-    key="tabela_uso_agua_1",
-    column_config={
-        "Natureza": st.column_config.SelectboxColumn(
-            "Natureza",
-            help="Natureza do corpo d'água: Superficial ou Subterrâneo",
-            options=["Superficial", "Subterrâneo"],
-            required=True,
-            width="small",
-        ),
-        "Classe de uso": st.column_config.SelectboxColumn(
-            "Classe de uso",
-            help="A classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação: Classe 1, Classe 2, Classe 3 ou Classe 4 - Decreto Estadual nº 10.755/77",
-            options=["Classe 1", "Classe 2", "Classe 3", "Classe 4"],
-            required=True,
-            width="small",
-        ),
-        "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
-            "Vazão outorgada (m³/h)",
-            help="Vazão de captação outorgada em m³/h",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",  # Número de casas decimais (2) exibidas na tabela
-            required=True,
-            width="small",
-        ),
-        "Horas/Dia": st.column_config.NumberColumn(
-            "Horas/Dia",
-            help="Quantidade de horas de uso de captação outorgada ao longo do dia (entre 0 e 24 horas)",
-            min_value=0,
-            step=0.01,
-            required=True,
-            width="small",
-        ),
-        "Dias/Ano": st.column_config.NumberColumn(
-            "Dias/Ano",
-            help="Quantidade de dias de uso de captação outorgada ao longo do ano (entre 0 e 365)",
-            min_value=0,
-            step=1,
-            required=True,
-            width="small",
-        ),
-        "Volume anual medido (m³)": st.column_config.NumberColumn(
-            "Volume anual medido (m³)",
-            help="Volume anual medido em m³ no ano anterior à cobrança, caso haja medição do uso de captação/consumo",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",  # Número de casas decimais (2) exibidas na tabela
-            required=True,
-            width="small",
-        ),
-    },
-)
+    # Características da tabela de captação/consumo
+    tabela_uso_padrao_1 = pd.DataFrame({
+        "Natureza": pd.Series(dtype="str"),
+        "Classe de uso": pd.Series(dtype="str"),
+        "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
+        "Horas/Dia": pd.Series(dtype="float"),
+        "Dias/Ano": pd.Series(dtype="int"),
+        "Volume anual medido (m³)": pd.Series(dtype="float"),
+    })
 
-# Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_1 = ALTURA_LINHA *  (len(tabela_uso_1) + 3) + 46
+    # Criação da tabela de captação/consumo
+    tabela_uso_1 = st.data_editor(
+        tabela_uso_padrao_1,
+        num_rows="dynamic",
+        hide_index=True,
+        use_container_width=True,
+        height=ALTURA_TABELA,
+        row_height=ALTURA_LINHA,
+        key="tabela_uso_agua_1",
+        column_config={
+            "Natureza": st.column_config.SelectboxColumn(
+                "Natureza",
+                help="Natureza do corpo d'água: Superficial ou Subterrâneo",
+                options=["Superficial", "Subterrâneo"],
+                required=True,
+                width="small",
+            ),
+            "Classe de uso": st.column_config.SelectboxColumn(
+                "Classe de uso",
+                help="A classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação: Classe 1, Classe 2, Classe 3 ou Classe 4 - Decreto Estadual nº 10.755/77",
+                options=["Classe 1", "Classe 2", "Classe 3", "Classe 4"],
+                required=True,
+                width="small",
+            ),
+            "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
+                "Vazão outorgada (m³/h)",
+                help="Vazão de captação outorgada em m³/h",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",  # Número de casas decimais (2) exibidas na tabela
+                required=True,
+                width="small",
+            ),
+            "Horas/Dia": st.column_config.NumberColumn(
+                "Horas/Dia",
+                help="Quantidade de horas de uso de captação outorgada ao longo do dia (entre 0 e 24 horas)",
+                min_value=0,
+                step=0.01,
+                required=True,
+                width="small",
+            ),
+            "Dias/Ano": st.column_config.NumberColumn(
+                "Dias/Ano",
+                help="Quantidade de dias de uso de captação outorgada ao longo do ano (entre 0 e 365)",
+                min_value=0,
+                step=1,
+                required=True,
+                width="small",
+            ),
+            "Volume anual medido (m³)": st.column_config.NumberColumn(
+                "Volume anual medido (m³)",
+                help="Volume anual medido em m³ no ano anterior à cobrança, caso haja medição do uso de captação/consumo",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",  # Número de casas decimais (2) exibidas na tabela
+                required=True,
+                width="small",
+            ),
+        },
+    )
 
-
-# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Preenchimento da tabela de Lançamento
-# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-st.write("Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
-
-tabela_uso_padrao_2 = pd.DataFrame({
-    "Classe de uso": pd.Series(dtype="str"),
-    "Taxa de remoção (%)": pd.Series(dtype="str"),
-    "DBO (mg/L)": pd.Series(dtype="float"),
-    "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
-    "Horas/Dia": pd.Series(dtype="float"),
-    "Dias/Ano": pd.Series(dtype="int"),
-    "Volume anual medido (m³)": pd.Series(dtype="float")
-})
+    # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
+    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA *  (len(tabela_uso_1) + 3) + 46
 
 
-# Altura total da tabela, calculada dinamicamente para caber todas as linhas sem precisar de barra de rolagem interna.
-# if "altura_tabela_uso_2" not in st.session_state:
-#    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_padrao_2) + 3) + 46
+    # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    # Preenchimento da tabela de Lançamento
+    # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-tabela_uso_2 = st.data_editor(
-    tabela_uso_padrao_2,
-    num_rows="dynamic",
-    hide_index=True,
-    use_container_width=True,
-    height=ALTURA_TABELA,
-    row_height=ALTURA_LINHA,
-    key="tabela_uso_agua_2",
-    column_config={
-        "Classe de uso": st.column_config.SelectboxColumn(
-            "Classe de uso",
-            help="Classe de uso preponderante do corpo d'água receptor: Classe 2, Classe 3 ou Classe 4",
-            options=["Classe 2", "Classe 3", "Classe 4"],
-            required=True,
-            width="small",
-        ),
-        "Taxa de remoção (%)": st.column_config.SelectboxColumn(
-            "Taxa de remoção (%)",
-            help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
-            options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
-                     "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
-            required=True,
-            width="medium",
-        ),
-        "DBO (mg/L)": st.column_config.NumberColumn(
-            "DBO (mg/L)",
-            help="Concentração de DBO em mg/L",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",
-            required=True,
-            width="small",
-        ),
-        "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
-            "Vazão outorgada (m³/h)",
-            help="Vazão de lançamento outorgada em m³/h",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",
-            required=True,
-            width="medium",
-        ),
-        "Horas/Dia": st.column_config.NumberColumn(
-            "Horas/Dia",
-            help="Quantidade de horas de uso de lançamento outorgada ao longo do dia (entre 0 e 24 horas)",
-            min_value=0,
-            step=0.01,
-            required=True,
-            width="small",
-        ),
-        "Dias/Ano": st.column_config.NumberColumn(
-            "Dias/Ano",
-            help="Quantidade de dias de uso de lançamento outorgado ao longo do ano (entre 0 e 365)",
-            min_value=0,
-            step=1,
-            required=True,
-            width="small",
-        ),
-        "Volume anual medido (m³)": st.column_config.NumberColumn(
-            "Volume anual medido (m³)",
-            help="Volume anual medido em m³ no ano anterior à cobrança, caso haja medição do uso de lançamento",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",
-            required=True,
-            width="medium",
-        ),
-    },
-)
+    st.write("Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
+
+    tabela_uso_padrao_2 = pd.DataFrame({
+        "Classe de uso": pd.Series(dtype="str"),
+        "Taxa de remoção (%)": pd.Series(dtype="str"),
+        "DBO (mg/L)": pd.Series(dtype="float"),
+        "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
+        "Horas/Dia": pd.Series(dtype="float"),
+        "Dias/Ano": pd.Series(dtype="int"),
+        "Volume anual medido (m³)": pd.Series(dtype="float")
+    })
 
 
-# Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_2) + 3) + 46
+    tabela_uso_2 = st.data_editor(
+        tabela_uso_padrao_2,
+        num_rows="dynamic",
+        hide_index=True,
+        use_container_width=True,
+        height=ALTURA_TABELA,
+        row_height=ALTURA_LINHA,
+        key="tabela_uso_agua_2",
+        column_config={
+            "Classe de uso": st.column_config.SelectboxColumn(
+                "Classe de uso",
+                help="Classe de uso preponderante do corpo d'água receptor: Classe 2, Classe 3 ou Classe 4",
+                options=["Classe 2", "Classe 3", "Classe 4"],
+                required=True,
+                width="small",
+            ),
+            "Taxa de remoção (%)": st.column_config.SelectboxColumn(
+                "Taxa de remoção (%)",
+                help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
+                options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
+                        "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
+                required=True,
+                width="medium",
+            ),
+            "DBO (mg/L)": st.column_config.NumberColumn(
+                "DBO (mg/L)",
+                help="Concentração de DBO em mg/L",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",
+                required=True,
+                width="small",
+            ),
+            "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
+                "Vazão outorgada (m³/h)",
+                help="Vazão de lançamento outorgada em m³/h",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",
+                required=True,
+                width="medium",
+            ),
+            "Horas/Dia": st.column_config.NumberColumn(
+                "Horas/Dia",
+                help="Quantidade de horas de uso de lançamento outorgada ao longo do dia (entre 0 e 24 horas)",
+                min_value=0,
+                step=0.01,
+                required=True,
+                width="small",
+            ),
+            "Dias/Ano": st.column_config.NumberColumn(
+                "Dias/Ano",
+                help="Quantidade de dias de uso de lançamento outorgado ao longo do ano (entre 0 e 365)",
+                min_value=0,
+                step=1,
+                required=True,
+                width="small",
+            ),
+            "Volume anual medido (m³)": st.column_config.NumberColumn(
+                "Volume anual medido (m³)",
+                help="Volume anual medido em m³ no ano anterior à cobrança, caso haja medição do uso de lançamento",
+                min_value=0.0,
+                step=0.01,
+                format="%.2f",
+                required=True,
+                width="medium",
+            ),
+        },
+    )
+
+
+    # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
+    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_2) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
