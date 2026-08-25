@@ -834,7 +834,7 @@ CALCULADORAS_POR_BACIA = {
     # "Aguapeí/Peixe": calcular_aguapei_peixe,
     "Alto Paranapanema": calcular_alto_paranapanema,
     # "Alto Tietê": calcular_alto_tiete,
-    # "Bacia Hidrográfica da Baixada Santista": calcular_bacia_hidrografica_da_baixada_santista,
+    # "Baixada Santista": calcular_baixada_santista,
     # "Baixo Pardo/Grande": calcular_baixo_pardo_grande,
     # "Baixo Tietê": calcular_baixo_tiete,
     # "Litoral Norte": calcular_litoral_norte,
