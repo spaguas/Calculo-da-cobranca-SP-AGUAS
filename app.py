@@ -254,8 +254,7 @@ if bacia_selecionada == 'Alto Paranapanema':
     # Preenchimento da tabela de Lançamento
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    st.write(
-        "Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
+    st.write("Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
 
     tabela_uso_padrao_2 = pd.DataFrame({
         "Classe de uso": pd.Series(dtype="str"),
