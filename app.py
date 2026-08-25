@@ -152,11 +152,10 @@ bacia_selecionada = st.selectbox(
 #
 # 6. Tabelas de Captação/Consumo e Lançamento
 #
-# A seção abaixo faz as considerações sobre as tabelas de preechimento de captação/consumo e lançamento de cada bacia hidrográfica. Os coeficientes de cada CBH pode variar de acordo com o 
+# A seção abaixo faz as considerações sobre as tabelas de preechimento de captação/consumo e lançamento de cada bacia hidrográfica. Os coeficientes de cada CBH pode variar de acordo com o
 # seu respectivo decreto, o que torna necessário a descrição detalhada de características do empreendimento.
 #
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 
 ##################################################################################################################################################################################################
@@ -172,9 +171,9 @@ if bacia_selecionada == 'Alto Paranapanema':
     LINHAS_VISIVEIS_SEM_SCROLL = 5
     ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
-
     # Mensagem para solicitação de preenchimento da tabela de captação/consumo
-    st.write("Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
+    st.write(
+        "Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
 
     # Características da tabela de captação/consumo
     tabela_uso_padrao_1 = pd.DataFrame({
@@ -215,7 +214,8 @@ if bacia_selecionada == 'Alto Paranapanema':
                 help="Vazão de captação outorgada em m³/h",
                 min_value=0.0,
                 step=0.01,
-                format="%.2f",  # Número de casas decimais (2) exibidas na tabela
+                # Número de casas decimais (2) exibidas na tabela
+                format="%.2f",
                 required=True,
                 width="small",
             ),
@@ -240,7 +240,8 @@ if bacia_selecionada == 'Alto Paranapanema':
                 help="Volume anual medido em m³ no ano anterior à cobrança, caso haja medição do uso de captação/consumo",
                 min_value=0.0,
                 step=0.01,
-                format="%.2f",  # Número de casas decimais (2) exibidas na tabela
+                # Número de casas decimais (2) exibidas na tabela
+                format="%.2f",
                 required=True,
                 width="small",
             ),
@@ -248,14 +249,15 @@ if bacia_selecionada == 'Alto Paranapanema':
     )
 
     # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA *  (len(tabela_uso_1) + 3) + 46
-
+    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
+        (len(tabela_uso_1) + 3) + 46
 
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     # Preenchimento da tabela de Lançamento
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    st.write("Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
+    st.write(
+        "Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
 
     tabela_uso_padrao_2 = pd.DataFrame({
         "Classe de uso": pd.Series(dtype="str"),
@@ -266,7 +268,6 @@ if bacia_selecionada == 'Alto Paranapanema':
         "Dias/Ano": pd.Series(dtype="int"),
         "Volume anual medido (m³)": pd.Series(dtype="float")
     })
-
 
     tabela_uso_2 = st.data_editor(
         tabela_uso_padrao_2,
@@ -288,7 +289,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 "Taxa de remoção (%)",
                 help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
                 options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
-                        "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
+                         "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
                 required=True,
                 width="medium",
             ),
@@ -338,9 +339,9 @@ if bacia_selecionada == 'Alto Paranapanema':
         },
     )
 
-
     # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_2) + 3) + 46
+    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
+        (len(tabela_uso_2) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -467,7 +468,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
+            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -538,7 +540,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_captacao_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
@@ -555,7 +558,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_lancamento_total = 0.0
 
     for _, linha in tabela_lancamento.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
@@ -577,7 +581,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_consumo_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
@@ -820,9 +825,6 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 # Consumo	  |                 	      |     X1-X3, X5-X7, X13     |         X4, X8-X12        |#
 # Lançamento  |          Y1, Y3           |            Y4             |         Y2, Y5-Y9         |#
 # -------------------------------------------------------------------------------------------------#
-
-
-
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
