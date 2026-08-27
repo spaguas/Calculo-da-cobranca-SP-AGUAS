@@ -174,8 +174,7 @@ if bacia_selecionada == 'Alto Paranapanema':
     ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
     # Mensagem para solicitação de preenchimento da tabela de captação/consumo
-    st.write(
-        "Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
+    st.write("Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
 
     # Características da tabela de captação/consumo
     tabela_uso_padrao_1 = pd.DataFrame({
