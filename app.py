@@ -123,7 +123,7 @@ st.markdown(
 bacias_hidrograficas = ["Aguapeí/Peixe",
                         "Alto Paranapanema",
                         "Alto Tietê",
-                        "Bacia Hidrográfica da Baixada Santista",
+                        "Baixada Santista",
                         "Baixo Pardo/Grande",
                         "Baixo Tietê",
                         "Litoral Norte",
@@ -149,6 +149,20 @@ bacia_selecionada = st.selectbox(
     placeholder="Selecione a Bacia Hidrográfica",
     label_visibility="collapsed",
 )
+
+
+
+cobrancas = ["Urbano", "Industrial", "Rural",]
+
+cobranca_selecionada = st.selectbox(
+    "Cobrança",
+    cobrancas,
+    index=None,
+    placeholder="Selecione o tipo de cobrança",
+    label_visibility="collapsed",
+)
+
+
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #
