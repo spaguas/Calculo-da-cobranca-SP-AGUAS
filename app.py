@@ -251,7 +251,8 @@ if bacia_selecionada == 'Alto Paranapanema':
     )
 
     # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * (len(tabela_uso_1) + 3) + 46
+    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
+        (len(tabela_uso_1) + 3) + 46
 
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     # Preenchimento da tabela de Lançamento
@@ -341,7 +342,8 @@ if bacia_selecionada == 'Alto Paranapanema':
     )
 
     # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * (len(tabela_uso_2) + 3) + 46
+    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
+        (len(tabela_uso_2) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -468,7 +470,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
+            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -539,7 +542,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_captacao_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
@@ -556,7 +560,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_lancamento_total = 0.0
 
     for _, linha in tabela_lancamento.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_lanc = calcular_v_lanc(volume_outorgado, volume_medido)
@@ -578,7 +583,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     valor_consumo_total = 0.0
 
     for _, linha in tabela_captacao.iterrows():
-        volume_outorgado = linha["Vazão outorgada (m³/h)"] * linha["Horas/Dia"] * linha["Dias/Ano"]
+        volume_outorgado = linha["Vazão outorgada (m³/h)"] * \
+            linha["Horas/Dia"] * linha["Dias/Ano"]
         volume_medido = linha["Volume anual medido (m³)"]
 
         v_cap = calcular_v_cap(volume_outorgado, volume_medido)
@@ -592,6 +598,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # Retorno dos valores calculados
     ################################################################################################
     return {
+        "FC": FC,
         "captacao": valor_captacao_total,
         "consumo": valor_consumo_total,
         "lancamento": valor_lancamento_total,
@@ -867,7 +874,8 @@ CALCULADORAS_POR_BACIA = {
 
 col_esq, col_botao, col_dir = st.columns([3, 1, 3])
 with col_botao:
-    calcular = st.button("Calcular", type="primary", icon="🧮", use_container_width=True)
+    calcular = st.button("Calcular", type="primary",
+                         icon="🧮", use_container_width=True)
 
 if calcular:
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
@@ -879,7 +887,8 @@ if calcular:
                 f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         resultado = calculadora(tabela_uso_1, tabela_uso_2)
-        col1, col2, col3, col4 = st.columns(4)
+        col0, col1, col2, col3, col4 = st.columns(5)
+        col0.metric("**Fator de Consumo (FC)**", f"{resultado['FC']:.6f}")
         col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
         col2.metric("**Consumo**", f"R$ {resultado['consumo']:,.2f}")
         col3.metric("**Lançamento**", f"R$ {resultado['lancamento']:,.2f}")
