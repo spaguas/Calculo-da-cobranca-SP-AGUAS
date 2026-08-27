@@ -117,9 +117,13 @@ st.markdown(
 # st.write('Selecione a Bacia Hidrográfica:')
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# 5. Seleção das bacias hidrográficas
+# 5. Seleção das bacias hidrográficas e tipo de cobrança
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Menu de opções para tipo de cobranças
+cobrancas = ["Urbano/Industrial", "Rural",]
+
+# Menu de opções para bacias hidrográficas
 bacias_hidrograficas = ["Aguapeí/Peixe",
                         "Alto Paranapanema",
                         "Alto Tietê",
@@ -142,27 +146,27 @@ bacias_hidrograficas = ["Aguapeí/Peixe",
                         "Tietê/Jacaré",
                         "Turvo/Grande",]
 
-bacia_selecionada = st.selectbox(
-    "Bacia Hidrográfica",
-    bacias_hidrograficas,
-    index=None,
-    placeholder="Selecione a Bacia Hidrográfica",
-    label_visibility="collapsed",
-)
 
+# Criação de duas colunas para seleção da cobrança e da bacia hidrográfica
+col_cobranca, col_bacia = st.columns([0.9, 3])
 
+with col_cobranca:
+    cobranca_selecionada = st.selectbox(
+        "Cobrança",
+        cobrancas,
+        index=None,
+        placeholder="Selecione o tipo de cobrança",
+        label_visibility="collapsed",
+    )
 
-cobrancas = ["Urbano", "Industrial", "Rural",]
-
-cobranca_selecionada = st.selectbox(
-    "Cobrança",
-    cobrancas,
-    index=None,
-    placeholder="Selecione o tipo de cobrança",
-    label_visibility="collapsed",
-)
-
-
+with col_bacia:
+    bacia_selecionada = st.selectbox(
+        "Bacia Hidrográfica",
+        bacias_hidrograficas,
+        index=None,
+        placeholder="Selecione a Bacia Hidrográfica",
+        label_visibility="collapsed",
+    )
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #
@@ -188,7 +192,8 @@ if bacia_selecionada == 'Alto Paranapanema':
     ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
     # Mensagem para solicitação de preenchimento da tabela de captação/consumo
-    st.write("Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
+    st.write(
+        "Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
 
     # Características da tabela de captação/consumo
     tabela_uso_padrao_1 = pd.DataFrame({
