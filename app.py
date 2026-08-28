@@ -165,7 +165,7 @@ with col_bacia:
 
 if cobranca_selecionada == "Rural":
     with st.container(border=True):
-        st.warning("⚠️ A cobrança para uso Rural ainda não é regulamentada por decreto no Estado de São Paulo. Esta é uma simulação hipotética, não uma cobrança oficial.")
+        st.warning("⚠️ A cobrança para uso Rural ainda não é regulamentada por decreto no Estado de São Paulo. Esta é uma simulação, não uma cobrança oficial.")
         st.write("**Coeficientes específicos para uso rural:**")
         col_x7, col_x12 = st.columns(2)
         with col_x7:
