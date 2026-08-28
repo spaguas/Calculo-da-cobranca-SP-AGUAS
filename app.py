@@ -120,6 +120,9 @@ st.markdown(
 # 5. Seleção das bacias hidrográficas e tipo de cobrança
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+
 # Menu de opções para tipo de cobranças
 cobrancas = ["Urbano/Industrial", "Rural",]
 
@@ -148,25 +151,39 @@ bacias_hidrograficas = ["Aguapeí/Peixe",
 
 
 # Criação de duas colunas para seleção da cobrança e da bacia hidrográfica
-col_cobranca, col_bacia = st.columns([0.9, 3])
-
+col_cobranca, col_bacia = st.columns([1, 2.5])
 with col_cobranca:
     cobranca_selecionada = st.selectbox(
-        "Cobrança",
-        cobrancas,
-        index=None,
-        placeholder="Selecione o tipo de cobrança",
-        label_visibility="collapsed",
+        "Cobrança", cobrancas, index=None,
+        placeholder="Tipo de cobrança", label_visibility="collapsed",
     )
-
 with col_bacia:
     bacia_selecionada = st.selectbox(
-        "Bacia Hidrográfica",
-        bacias_hidrograficas,
-        index=None,
-        placeholder="Selecione a Bacia Hidrográfica",
-        label_visibility="collapsed",
+        "Bacia Hidrográfica", bacias_hidrograficas, index=None,
+        placeholder="Selecione a Bacia Hidrográfica", label_visibility="collapsed",
     )
+
+if cobranca_selecionada == "Rural":
+    with st.container(border=True):
+        st.warning("⚠️ A cobrança para uso Rural ainda não é regulamentada por decreto no Estado de São Paulo. Esta é uma simulação hipotética, não uma cobrança oficial.")
+        st.write("**Coeficientes específicos para uso rural:**")
+        col_x7, col_x12 = st.columns(2)
+        with col_x7:
+            x7_simulado = st.slider(
+                "X7: Finalidade do uso",
+                min_value=0.01, max_value=1.5, value=1.0, step=0.01,
+                help="Pondera o valor de acordo com a destinação da água (ex: irrigação).",
+            )
+        with col_x12:
+            x12_simulado = st.slider(
+                "X12: Práticas de conservação e manejo do solo",
+                min_value=0.01, max_value=1.5, value=1.0, step=0.01,
+                help="Reflete o quanto práticas de manejo do solo reduzem o impacto do uso da água.",
+            )
+
+
+
+
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #
@@ -188,7 +205,7 @@ if bacia_selecionada == 'Alto Paranapanema':
 
     # Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
     ALTURA_LINHA = 25
-    LINHAS_VISIVEIS_SEM_SCROLL = 5
+    LINHAS_VISIVEIS_SEM_SCROLL = 4
     ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
 
     # Mensagem para solicitação de preenchimento da tabela de captação/consumo
@@ -237,7 +254,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 # Número de casas decimais (2) exibidas na tabela
                 format="%.2f",
                 required=True,
-                width="small",
+                width="medium",
             ),
             "Horas/Dia": st.column_config.NumberColumn(
                 "Horas/Dia",
@@ -263,7 +280,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 # Número de casas decimais (2) exibidas na tabela
                 format="%.2f",
                 required=True,
-                width="small",
+                width="medium",
             ),
         },
     )
