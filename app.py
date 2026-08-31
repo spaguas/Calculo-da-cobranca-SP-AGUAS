@@ -409,8 +409,7 @@ if bacia_selecionada == 'Alto Paranapanema':
 # Consumo	  |                 	      |      X1-X3, X5-X7, X13    |         X4, X8-X12        |#
 # Lançamento  |            Y1, Y3         |             Y4	          |         Y2, Y5-Y9         |#
 # -------------------------------------------------------------------------------------------------#
-
-def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
+def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento, x7_manual=None, x12_manual=None):
     ################################################################################################
     # Parâmetros constantes/fixos
     ################################################################################################
@@ -437,6 +436,16 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
 
     # Lançamento
     Y4_LANC = 1.000
+
+#########################################################################################
+    # Apenas para o uso Rural:
+        # Se vier valor do slider (modo Rural), ele substitui o fixo; senão,
+        # X7 e X12 continuam em 1,00, exatamente como na regra normal.
+    x7_cap_efetivo = x7_manual if x7_manual is not None else X7_CAP
+    x7_cons_efetivo = x7_manual if x7_manual is not None else X7_CONS
+    x12_cap_efetivo = x12_manual if x12_manual is not None else X12_CAP
+    x12_cons_efetivo = x12_manual if x12_manual is not None else X12_CONS
+#########################################################################################
 
     ################################################################################################
     # Parâmetros variáveis
@@ -494,16 +503,15 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     # Calcular o PUF para captação, consumo e lançamento
     ################################################################################################
     # Captação
-    def calcular_puf_cap(natureza, classe_de_uso, PUBCAP_ALPA, x3_cap, x5_cap, x7_cap, x13_cap):
+    def calcular_puf_cap(natureza, classe_de_uso, PUBCAP_ALPA, x3_cap, x5_cap, x7_cap, x12_cap, x13_cap):
         x1 = obter_x1(natureza)
         x2 = obter_x2(classe_de_uso)
-        PUF_CAP = PUBCAP_ALPA * x1 * x2 * x3_cap * x5_cap * x7_cap * x13_cap
+        PUF_CAP = PUBCAP_ALPA * x1 * x2 * x3_cap * x5_cap * x7_cap * x12_cap * x13_cap
         return PUF_CAP
 
     # Consumo
-    def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * \
-            x3_cons * x5_cons * x6_cons * x7_cons * x13_cons
+    def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x12_cons, x13_cons):
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x12_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -582,7 +590,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         VCAPT += v_cap
 
         puf_cap = calcular_puf_cap(
-            linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, X7_CAP, X13_CAP,)
+            linha["Natureza"], linha["Classe de uso"], PUBCAP_ALPA, X3_CAP, X5_CAP, x7_cap_efetivo, x12_cap_efetivo, X13_CAP,)
         valor_captacao_total += calcular_vcc(v_cap, puf_cap)
 
     ################################################################################################
@@ -623,7 +631,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
         v_cons = calcular_v_cons(FC, v_cap)
 
         puf_cons = calcular_puf_cons(
-            PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, X7_CONS, X13_CONS,)
+            PUBCONS_ALPA, X1_CONS, X2_CONS, X3_CONS, X5_CONS, X6_CONS, x7_cons_efetivo, x12_cons_efetivo, X13_CONS,)
         valor_consumo_total += calcular_vcco(v_cons, puf_cons)
 
     ################################################################################################
@@ -918,7 +926,9 @@ if calcular:
             st.error(
                 f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
-        resultado = calculadora(tabela_uso_1, tabela_uso_2)
+        x7_manual = x7_simulado if cobranca_selecionada == "Rural" else None
+        x12_manual = x12_simulado if cobranca_selecionada == "Rural" else None
+        resultado = calcular_alto_paranapanema(tabela_uso_1, tabela_uso_2, x7_manual=x7_manual, x12_manual=x12_manual)
         col0, col1, col2, col3, col4 = st.columns(5)
         col0.metric("**Fator de Consumo (FC)**", f"{resultado['FC']:.6f}")
         col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
