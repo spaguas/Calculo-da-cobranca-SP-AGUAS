@@ -439,8 +439,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento, x7_manual=Non
 
 #########################################################################################
     # Apenas para o uso Rural:
-        # Se vier valor do slider (modo Rural), ele substitui o fixo; senão,
-        # X7 e X12 continuam em 1,00, exatamente como na regra normal.
+    # Se vier valor do slider (modo Rural), ele substitui o fixo; senão,
+    # X7 e X12 continuam em 1,00, exatamente como na regra normal.
     x7_cap_efetivo = x7_manual if x7_manual is not None else X7_CAP
     x7_cons_efetivo = x7_manual if x7_manual is not None else X7_CONS
     x12_cap_efetivo = x12_manual if x12_manual is not None else X12_CAP
@@ -511,7 +511,8 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento, x7_manual=Non
 
     # Consumo
     def calcular_puf_cons(PUBCONS_ALPA, x1_cons, x2_cons, x3_cons, x5_cons, x6_cons, x7_cons, x12_cons, x13_cons):
-        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * x5_cons * x6_cons * x7_cons * x12_cons * x13_cons
+        PUF_CONS = PUBCONS_ALPA * x1_cons * x2_cons * x3_cons * \
+            x5_cons * x6_cons * x7_cons * x12_cons * x13_cons
         return PUF_CONS
 
     # Lançamento
@@ -928,7 +929,8 @@ if calcular:
     else:
         x7_manual = x7_simulado if cobranca_selecionada == "Rural" else None
         x12_manual = x12_simulado if cobranca_selecionada == "Rural" else None
-        resultado = calcular_alto_paranapanema(tabela_uso_1, tabela_uso_2, x7_manual=x7_manual, x12_manual=x12_manual)
+        resultado = calcular_alto_paranapanema(
+            tabela_uso_1, tabela_uso_2, x7_manual=x7_manual, x12_manual=x12_manual)
         col0, col1, col2, col3, col4 = st.columns(5)
         col0.metric("**Fator de Consumo (FC)**", f"{resultado['FC']:.6f}")
         col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
