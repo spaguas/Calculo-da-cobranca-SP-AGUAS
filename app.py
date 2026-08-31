@@ -121,8 +121,6 @@ st.markdown(
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
 # Menu de opções para tipo de cobranças
 cobrancas = ["Urbano/Industrial", "Rural",]
 
@@ -180,9 +178,6 @@ if cobranca_selecionada == "Rural":
                 min_value=0.01, max_value=1.5, value=1.0, step=0.01,
                 help="Reflete o quanto práticas de manejo do solo reduzem o impacto do uso da água.",
             )
-
-
-
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -325,7 +320,8 @@ if bacia_selecionada == 'Alto Paranapanema':
             "Taxa de remoção (%)": st.column_config.SelectboxColumn(
                 "Taxa de remoção (%)",
                 help="A carga lançada e seu regime de variação, atendido o padrão de emissão requerido para o local (entre 0% e 100%)",
-                options=["> 95% de remoção", "> 90% e ≤ 95% de remoção","> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
+                options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
+                         "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
                 required=True,
                 width="medium",
             ),
@@ -426,6 +422,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     X3_CAP = 1.000
     X5_CAP = 1.000
     X7_CAP = 1.000
+    X12_CAP = 1.000 # Apenas para cobrança do uso rural
     X13_CAP = 1.000
 
     # Consumo
@@ -435,6 +432,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     X5_CONS = 1.000
     X6_CONS = 1.000
     X7_CONS = 1.000
+    X12_CONS = 1.000  # Apenas para cobrança do uso rural
     X13_CONS = 1.000
 
     # Lançamento
