@@ -422,7 +422,7 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento):
     X3_CAP = 1.000
     X5_CAP = 1.000
     X7_CAP = 1.000
-    X12_CAP = 1.000 # Apenas para cobrança do uso rural
+    X12_CAP = 1.000  # Apenas para cobrança do uso rural
     X13_CAP = 1.000
 
     # Consumo
