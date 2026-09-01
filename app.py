@@ -74,7 +74,7 @@ st.markdown("""
     }
    
     [data-testid="stMetricValue"] p {
-        font-size: 25px !important;
+        font-size: 20px !important;
     }
 
     [data-testid="stCaptionContainer"] {
