@@ -56,7 +56,7 @@ st.markdown("""
     }
 
     p, li, label, .stMarkdown, .stCaption {
-        font-size: 16px !important;
+        font-size: 14px !important;
     }
 
     [data-testid="stVerticalBlock"] {
@@ -199,9 +199,9 @@ if bacia_selecionada == 'Alto Paranapanema':
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     # Altura de cada linha da tabela (usada tanto no row_height quanto no cálculo da altura total, pra manter os dois em sincronia).
-    ALTURA_LINHA = 25
+    ALTURA_LINHA = 20
     LINHAS_VISIVEIS_SEM_SCROLL = 4
-    ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 22
+    ALTURA_TABELA = ALTURA_LINHA * (LINHAS_VISIVEIS_SEM_SCROLL + 1) + 20
 
     # Mensagem para solicitação de preenchimento da tabela de captação/consumo
     st.write(
