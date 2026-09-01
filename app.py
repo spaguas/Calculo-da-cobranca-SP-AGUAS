@@ -437,15 +437,15 @@ def calcular_alto_paranapanema(tabela_captacao, tabela_lancamento, x7_manual=Non
     # Lançamento
     Y4_LANC = 1.000
 
-#########################################################################################
-    # Apenas para o uso Rural:
-    # Se vier valor do slider (modo Rural), ele substitui o fixo; senão,
-    # X7 e X12 continuam em 1,00, exatamente como na regra normal.
-    x7_cap_efetivo = x7_manual if x7_manual is not None else X7_CAP
-    x7_cons_efetivo = x7_manual if x7_manual is not None else X7_CONS
-    x12_cap_efetivo = x12_manual if x12_manual is not None else X12_CAP
-    x12_cons_efetivo = x12_manual if x12_manual is not None else X12_CONS
-#########################################################################################
+    ##################################################################################
+    # Apenas para o uso Rural:                                                       #
+    # Se vier valor do slider (modo Rural), ele substitui o fixo; senão,             #
+    # X7 e X12 continuam em 1,00, exatamente como na regra normal.                   #
+    x7_cap_efetivo = x7_manual if x7_manual is not None else X7_CAP                  #
+    x7_cons_efetivo = x7_manual if x7_manual is not None else X7_CONS                #
+    x12_cap_efetivo = x12_manual if x12_manual is not None else X12_CAP              #
+    x12_cons_efetivo = x12_manual if x12_manual is not None else X12_CONS            #
+    ##################################################################################
 
     ################################################################################################
     # Parâmetros variáveis
@@ -918,7 +918,11 @@ with col_botao:
     calcular = st.button("Calcular", type="primary",
                          icon="🧮", use_container_width=True)
 
+
 if calcular:
+    st.session_state.ja_calculou = True  # Flag para indicar que o cálculo foi realizado
+
+if st.session_state.get("ja_calculou", False):
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
     if cobranca_selecionada is None:
         st.error("Selecione a Cobrança antes de calcular.")
