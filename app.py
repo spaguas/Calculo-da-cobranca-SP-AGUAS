@@ -920,7 +920,8 @@ with col_botao:
 
 
 if calcular:
-    st.session_state.ja_calculou = True  # Flag para indicar que o cálculo foi realizado
+    # Flag para indicar que o cálculo foi realizado
+    st.session_state.ja_calculou = True
 
 if st.session_state.get("ja_calculou", False):
     calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
