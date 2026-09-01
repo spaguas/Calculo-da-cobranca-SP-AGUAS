@@ -232,14 +232,14 @@ if bacia_selecionada == 'Alto Paranapanema':
                 help="Natureza do corpo d'água: Superficial ou Subterrâneo",
                 options=["Superficial", "Subterrâneo"],
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Classe de uso": st.column_config.SelectboxColumn(
                 "Classe de uso",
                 help="A classe de uso preponderante em que estiver enquadrado o corpo d'água no local do uso ou da derivação: Classe 1, Classe 2, Classe 3 ou Classe 4 - Decreto Estadual nº 10.755/77",
                 options=["Classe 1", "Classe 2", "Classe 3", "Classe 4"],
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
                 "Vazão outorgada (m³/h)",
@@ -249,7 +249,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 # Número de casas decimais (2) exibidas na tabela
                 format="%.2f",
                 required=True,
-                width="medium",
+                #width="medium",
             ),
             "Horas/Dia": st.column_config.NumberColumn(
                 "Horas/Dia",
@@ -257,7 +257,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 min_value=0,
                 step=0.01,
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Dias/Ano": st.column_config.NumberColumn(
                 "Dias/Ano",
@@ -265,7 +265,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 min_value=0,
                 step=1,
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Volume anual medido (m³)": st.column_config.NumberColumn(
                 "Volume anual medido (m³)",
@@ -275,7 +275,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 # Número de casas decimais (2) exibidas na tabela
                 format="%.2f",
                 required=True,
-                width="medium",
+                #width="medium",
             ),
         },
     )
@@ -315,7 +315,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 help="Classe de uso preponderante do corpo d'água receptor: Classe 2, Classe 3 ou Classe 4",
                 options=["Classe 2", "Classe 3", "Classe 4"],
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Taxa de remoção (%)": st.column_config.SelectboxColumn(
                 "Taxa de remoção (%)",
@@ -323,7 +323,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 options=["> 95% de remoção", "> 90% e ≤ 95% de remoção",
                          "> 85% e ≤ 90% de remoção", "> 80% e ≤ 85% de remoção", "≤ 80% de remoção"],
                 required=True,
-                width="medium",
+                #width="medium",
             ),
             "DBO (mg/L)": st.column_config.NumberColumn(
                 "DBO (mg/L)",
@@ -332,7 +332,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 step=0.01,
                 format="%.2f",
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Vazão outorgada (m³/h)": st.column_config.NumberColumn(
                 "Vazão outorgada (m³/h)",
@@ -341,7 +341,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 step=0.01,
                 format="%.2f",
                 required=True,
-                width="medium",
+                #width="medium",
             ),
             "Horas/Dia": st.column_config.NumberColumn(
                 "Horas/Dia",
@@ -349,7 +349,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 min_value=0,
                 step=0.01,
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Dias/Ano": st.column_config.NumberColumn(
                 "Dias/Ano",
@@ -357,7 +357,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 min_value=0,
                 step=1,
                 required=True,
-                width="small",
+                #width="small",
             ),
             "Volume anual medido (m³)": st.column_config.NumberColumn(
                 "Volume anual medido (m³)",
@@ -366,7 +366,7 @@ if bacia_selecionada == 'Alto Paranapanema':
                 step=0.01,
                 format="%.2f",
                 required=True,
-                width="medium",
+                #width="medium",
             ),
         },
     )
