@@ -208,7 +208,7 @@ if bacia_selecionada == 'Alto Paranapanema':
         "Preencha os dados para os usos de **captação**/**consumo** do empreendimento (se houver):")
 
     # Características da tabela de captação/consumo
-    tabela_uso_padrao_1 = pd.DataFrame({
+    tabela_uso_padrao_cap = pd.DataFrame({
         "Natureza": pd.Series(dtype="str"),
         "Classe de uso": pd.Series(dtype="str"),
         "Vazão outorgada (m³/h)": pd.Series(dtype="float"),
@@ -218,8 +218,8 @@ if bacia_selecionada == 'Alto Paranapanema':
     })
 
     # Criação da tabela de captação/consumo
-    tabela_uso_1 = st.data_editor(
-        tabela_uso_padrao_1,
+    tabela_uso_cap = st.data_editor(
+        tabela_uso_padrao_cap,
         num_rows="dynamic",
         hide_index=True,
         use_container_width=True,
@@ -281,8 +281,8 @@ if bacia_selecionada == 'Alto Paranapanema':
     )
 
     # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-    st.session_state.altura_tabela_uso_1 = ALTURA_LINHA * \
-        (len(tabela_uso_1) + 3) + 46
+    st.session_state.altura_tabela_uso_cap = ALTURA_LINHA * \
+        (len(tabela_uso_cap) + 3) + 46
 
     # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     # Preenchimento da tabela de Lançamento
@@ -291,7 +291,7 @@ if bacia_selecionada == 'Alto Paranapanema':
     st.write(
         "Preencha os dados para os usos de **lançamento** do empreendimento (se houver):")
 
-    tabela_uso_padrao_2 = pd.DataFrame({
+    tabela_uso_padrao_lanc = pd.DataFrame({
         "Classe de uso": pd.Series(dtype="str"),
         "Taxa de remoção (%)": pd.Series(dtype="str"),
         "DBO (mg/L)": pd.Series(dtype="float"),
@@ -301,8 +301,8 @@ if bacia_selecionada == 'Alto Paranapanema':
         "Volume anual medido (m³)": pd.Series(dtype="float")
     })
 
-    tabela_uso_2 = st.data_editor(
-        tabela_uso_padrao_2,
+    tabela_uso_lanc = st.data_editor(
+        tabela_uso_padrao_lanc,
         num_rows="dynamic",
         hide_index=True,
         use_container_width=True,
@@ -372,8 +372,8 @@ if bacia_selecionada == 'Alto Paranapanema':
     )
 
     # Atualiza a altura salva com base na quantidade atual de linhas — assim, ao adicionar ou remover uma linha, a tabela já nasce no tamanho certo na interação seguinte.
-    st.session_state.altura_tabela_uso_2 = ALTURA_LINHA * \
-        (len(tabela_uso_2) + 3) + 46
+    st.session_state.altura_tabela_uso_lanc = ALTURA_LINHA * \
+        (len(tabela_uso_lanc) + 3) + 46
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -932,7 +932,7 @@ if calcular:
         x7_manual = x7_simulado if cobranca_selecionada == "Rural" else None
         x12_manual = x12_simulado if cobranca_selecionada == "Rural" else None
         resultado = calcular_alto_paranapanema(
-            tabela_uso_1, tabela_uso_2, x7_manual=x7_manual, x12_manual=x12_manual)
+            tabela_uso_cap, tabela_uso_lanc, x7_manual=x7_manual, x12_manual=x12_manual)
         col0, col1, col2, col3, col4 = st.columns(5)
         col0.metric("**Fator de Consumo (FC)**", f"{resultado['FC']:.6f}")
         col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
@@ -957,7 +957,7 @@ if calcular:
 #     if calculadora is None:
 #         st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
 #     else:
-#         resultado = calculadora(tabela_uso_1, tabela_uso_2)
+#         resultado = calculadora(tabela_uso_cap, tabela_uso_lanc)
 #         col1, col2, col3, col4 = st.columns(4)
 #         col1.metric("Captação", f"R$ {resultado['captacao']:,.2f}")
 #         col2.metric("Consumo", f"R$ {resultado['consumo']:,.2f}")
