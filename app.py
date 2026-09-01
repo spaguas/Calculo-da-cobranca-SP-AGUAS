@@ -913,36 +913,27 @@ CALCULADORAS_POR_BACIA = {
 # 1ª ABORDAGEM: Dados calculados mostrados no final da página #
 ###############################################################
 
-col_esq, col_botao, col_dir = st.columns([3, 1, 3])
-with col_botao:
-    calcular = st.button("Calcular", type="primary",icon="🧮", use_container_width=True)
 
+calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
+if cobranca_selecionada is None:
+    st.error("Selecione a Cobrança antes de calcular.")
 
-if calcular:
-    # Flag para indicar que o cálculo foi realizado
-    st.session_state.ja_calculou = True
-
-if st.session_state.get("ja_calculou", False):
-    calculadora = CALCULADORAS_POR_BACIA.get(bacia_selecionada)
-    if cobranca_selecionada is None:
-        st.error("Selecione a Cobrança antes de calcular.")
-
-    elif calculadora is None:
-        if bacia_selecionada is None:
-            st.error("Selecione a Bacia Hidrográfica antes de calcular.")
-        else:
-            st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+elif calculadora is None:
+    if bacia_selecionada is None:
+        st.error("Selecione a Bacia Hidrográfica antes de calcular.")
     else:
-        x7_manual = x7_simulado if cobranca_selecionada == "Rural" else None
-        x12_manual = x12_simulado if cobranca_selecionada == "Rural" else None
-        resultado = calcular_alto_paranapanema(tabela_uso_cap, tabela_uso_lanc, x7_manual=x7_manual, x12_manual=x12_manual)
-        col0, col1, col2, col3, col4 = st.columns(5)
-        col0.metric("**Fator de Consumo (FC)**", f"{resultado['FC']:.6f}")
-        col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
-        col2.metric("**Consumo**", f"R$ {resultado['consumo']:,.2f}")
-        col3.metric("**Lançamento**", f"R$ {resultado['lancamento']:,.2f}")
-        col4.metric("**Total**", f"**R$ {resultado['total']:,.2f}**")
-        st.caption(resultado["mensagem"])
+        st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+else:
+    x7_manual = x7_simulado if cobranca_selecionada == "Rural" else None
+    x12_manual = x12_simulado if cobranca_selecionada == "Rural" else None
+    resultado = calcular_alto_paranapanema(tabela_uso_cap, tabela_uso_lanc, x7_manual=x7_manual, x12_manual=x12_manual)
+    col0, col1, col2, col3, col4 = st.columns(5)
+    col0.metric("**Fator de Consumo (FC)**", f"{resultado['FC']:.6f}")
+    col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
+    col2.metric("**Consumo**", f"R$ {resultado['consumo']:,.2f}")
+    col3.metric("**Lançamento**", f"R$ {resultado['lancamento']:,.2f}")
+    col4.metric("**Total**", f"**R$ {resultado['total']:,.2f}**")
+    st.caption(resultado["mensagem"])
 
 
 ###############################################################
