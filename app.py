@@ -927,7 +927,8 @@ if calcular:
         if bacia_selecionada is None:
             st.error("Selecione a Bacia Hidrográfica antes de calcular.")
         else:
-            st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+            st.error(
+                f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         x7_manual = x7_simulado if cobranca_selecionada == "Rural" else None
         x12_manual = x12_simulado if cobranca_selecionada == "Rural" else None
@@ -940,7 +941,6 @@ if calcular:
         col3.metric("**Lançamento**", f"R$ {resultado['lancamento']:,.2f}")
         col4.metric("**Total**", f"**R$ {resultado['total']:,.2f}**")
         st.caption(resultado["mensagem"])
-        
 
 
 ###############################################################
