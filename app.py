@@ -932,13 +932,11 @@ if st.session_state.get("ja_calculou", False):
         if bacia_selecionada is None:
             st.error("Selecione a Bacia Hidrográfica antes de calcular.")
         else:
-            st.error(
-                f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
+            st.error(f"Ainda não temos os coeficientes de '{bacia_selecionada}' implementados.")
     else:
         x7_manual = x7_simulado if cobranca_selecionada == "Rural" else None
         x12_manual = x12_simulado if cobranca_selecionada == "Rural" else None
-        resultado = calcular_alto_paranapanema(
-            tabela_uso_cap, tabela_uso_lanc, x7_manual=x7_manual, x12_manual=x12_manual)
+        resultado = calcular_alto_paranapanema(tabela_uso_cap, tabela_uso_lanc, x7_manual=x7_manual, x12_manual=x12_manual)
         col0, col1, col2, col3, col4 = st.columns(5)
         col0.metric("**Fator de Consumo (FC)**", f"{resultado['FC']:.6f}")
         col1.metric("**Captação**", f"R$ {resultado['captacao']:,.2f}")
