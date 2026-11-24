@@ -1,0 +1,16 @@
+# Ambiente Python (o passo a passo de execução cria a pasta venv aqui)
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Segredos do Streamlit nunca vão para o Git
+.streamlit/secrets.toml
+.env
+
+# Editores, sistema e arquivos temporários do Office (criados ao abrir o .docx)
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*
