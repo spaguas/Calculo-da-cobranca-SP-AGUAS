@@ -48,9 +48,9 @@ MOSTRAR_COMPARACAO_URBANA = os.environ.get("SP_AGUAS_COMPARACAO_URBANA", "1") ==
 # integrada não), para que este app.py seja o mesmo nas duas pastas. SP_AGUAS_SOMENTE_RURAL=1 ou 0 decide no lugar do arquivo.
 SOMENTE_RURAL = os.environ.get("SP_AGUAS_SOMENTE_RURAL", "1" if (PASTA / "SOMENTE_RURAL.txt").exists() else "0") == "1"
 # Parcelas do resultado rural (seção 7): em destaque, o valor anual em 8 parcelas mensais, de maio a dezembro, como num
-# lote gerado por volta de maio; o total anual vem embaixo. Liga só na edição só rural; SP_AGUAS_PARCELAS_RURAIS=1 ou 0
-# decide no lugar dela.
-MOSTRAR_PARCELAS_RURAIS = os.environ.get("SP_AGUAS_PARCELAS_RURAIS", "1" if SOMENTE_RURAL else "0") == "1"
+# lote gerado por volta de maio; o total anual vem ao lado. Liga no modo rural da versão geral e na edição só rural
+# (pedido de 24/11/2026); SP_AGUAS_PARCELAS_RURAIS=0 desliga.
+MOSTRAR_PARCELAS_RURAIS = os.environ.get("SP_AGUAS_PARCELAS_RURAIS", "1") == "1"
 # Texto alternativo do logotipo: o nome da instituição e a descrição da imagem, para quem não a vê.
 LOGO_ALT = ("Logotipo da SP Águas, Agência de Águas do Estado de São Paulo: a sigla SP e a palavra Águas em letras "
             "pretas grandes; à direita da sigla, três faixas onduladas, em verde, azul-escuro e azul-claro, que lembram "
@@ -202,7 +202,7 @@ st.html("""
 <style>
 /* O botão "Fullscreen" do logotipo repetia a descrição inteira da imagem no leitor de tela e não tem uso aqui */
 [data-testid="stElementContainer"]:has([data-testid="stImage"]) [data-testid="stElementToolbar"] { display: none; }
-/* Edição só rural: os cartões dos preços percebidos por m³, abaixo da parcela e do total, com o valor menor */
+/* Resultado rural: os cartões dos preços percebidos por m³, abaixo da parcela e do total, com o valor menor */
 .st-key-rural_precos [data-testid="stMetricValue"] { font-size: 1.6rem; }
 @media (max-width: 640px) {
     h1 { font-size: 1.6rem !important; }
@@ -1754,7 +1754,7 @@ def resumo_rural(res):
     parcelas = (f"captação {fmt_brl(res['captacao'])}, consumo {fmt_brl(res['consumo'])} e "
                 f"lançamento {fmt_brl(res['lancamento'])}")
     mensais = parcelas_mensais(res)
-    if mensais:   # edição só rural: as parcelas mensais primeiro, como na tela
+    if mensais:   # as parcelas mensais primeiro, como na tela
         texto = (f"Resultado: {len(mensais)} parcelas mensais de {fmt_brl(mensais[0][1])}, de {mensais[0][0].lower()} "
                  f"a {mensais[-1][0].lower()}, e valor total anual de {fmt_brl(res['total'])} ({parcelas})")
     else:
@@ -1777,7 +1777,7 @@ def resultado_rural(res, urbano=None):
     mensais = parcelas_mensais(res)
     preco = fmt_brl(res["preco_percebido"], 4)
     tem_isencao = isencao["isento"] or isencao["parcial"]
-    if mensais:   # edição só rural: a parcela mensal e o total anual em destaque; embaixo, os preços percebidos
+    if mensais:   # a parcela mensal e o total anual em destaque; embaixo, os preços percebidos
         n, primeira, ultima = len(mensais), mensais[0][1], mensais[-1][1]
         de, ate = mensais[0][0].lower(), mensais[-1][0].lower()
         colunas = st.columns(3 if tem_isencao else 2)

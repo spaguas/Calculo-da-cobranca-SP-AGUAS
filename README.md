@@ -32,7 +32,7 @@ Os textos dos decretos, as transcrições dos anexos, os testes automatizados e 
 
 **Horas por dia:** podem ser digitadas em hora e minuto (`7:30`) ou em hora decimal (`7,5`), como em muitos pareceres técnicos. O formato se escolhe na chave "Hora decimal", ao lado do rótulo de cada campo de horas, e o cálculo usa sempre a hora decimal.
 
-**Modo rural:** simula a cobrança pelo uso rural segundo a minuta de decreto em discussão na CT-COB (versão preliminar de 31/08/2026). A cobrança rural ainda não está vigente, e o resultado é um cenário. A simulação parte das premissas do estudo da SP Águas apresentado em 07/10/2026, que o usuário pode alterar no painel "Premissas do cenário rural": PUBs, coeficientes X7, X12 e Y9, fator de consumo da irrigação (88%) e limiar de isenção de 300 m³/dia. O agricultor familiar inscrito no CAF é isento. A chave "Sazonalidade" abre a outorga mês a mês, e a chave "Comparar com a regra urbana da bacia" mostra quanto o mesmo uso pagaria pelo decreto urbano.
+**Modo rural:** simula a cobrança pelo uso rural segundo a minuta de decreto em discussão na CT-COB (versão preliminar de 31/08/2026). A cobrança rural ainda não está vigente, e o resultado é um cenário. A simulação parte das premissas do estudo da SP Águas apresentado em 07/10/2026, que o usuário pode alterar no painel "Premissas do cenário rural": PUBs, coeficientes X7, X12 e Y9, fator de consumo da irrigação (88%) e limiar de isenção de 300 m³/dia. O agricultor familiar inscrito no CAF é isento. O resultado mostra em destaque a parcela mensal ("8x – R$ …, maio a dezembro") ao lado do valor total anual: o valor anual dividido em 8 parcelas iguais, como num lote gerado por volta de maio. É uma hipótese da simulação, porque a minuta não fixa parcelamento. A chave "Sazonalidade" abre a outorga mês a mês, e a chave "Comparar com a regra urbana da bacia" mostra quanto o mesmo uso pagaria pelo decreto urbano.
 
 ## Chaves de configuração
 
@@ -40,6 +40,7 @@ Os textos dos decretos, as transcrições dos anexos, os testes automatizados e 
 | :--- | :--- |
 | `SP_AGUAS_LOTE_SISCOB=1` | Mostra a seção "Lote de cobrança mensal (SisCob 2.0)", que divide o valor anual nas faturas do lote, outorga por outorga. Desligada na versão pública. |
 | `SP_AGUAS_COMPARACAO_URBANA=0` | Tira do modo rural a chave de comparação com a regra urbana. |
+| `SP_AGUAS_PARCELAS_RURAIS=0` | Tira do resultado rural as 8 parcelas mensais e deixa só o valor total anual. |
 | `SP_AGUAS_SOMENTE_RURAL=1` | Edição só rural, usada na apresentação à CT-COB: some a escolha do tipo de usuário. Também liga com um arquivo `SOMENTE_RURAL.txt` na pasta do app. |
 
 ## Como rodar
